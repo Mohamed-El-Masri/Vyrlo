@@ -18,6 +18,7 @@ class NearbyListings {
                 </svg>
             `)}`
         };
+        
 
         // إعدادات التصفح
         this.page = 1;
@@ -65,7 +66,6 @@ class NearbyListings {
 
     async init() {
         try {
-            await this.getUserLocation();
             this.render();
             await this.loadListings();
             
@@ -77,24 +77,6 @@ class NearbyListings {
         }
     }
 
-    async getUserLocation() {
-        try {
-            if ("geolocation" in navigator) {
-                const position = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject);
-                });
-                
-                this.userLocation = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                };
-            }
-        } catch (error) {
-            console.log('Location access denied or error:', error);
-            this.userLocation = null;
-        }
-    }
-
     render() {
         this.container.innerHTML = `
             <div class="container">
@@ -102,9 +84,9 @@ class NearbyListings {
                     <div class="col-12 mb-4">
                         <div class="main">
                             <h2 class="text-center">
-                                ${this.userLocation ? 'Popular' : 'Featured'} 
+                                Featured 
                                 <span class="Services">Services</span> 
-                                ${this.userLocation ? 'near you' : 'for you'}
+                                for you
                             </h2>
                         </div>
                     </div>
@@ -202,10 +184,6 @@ class NearbyListings {
             const url = new URL('https://virlo.vercel.app/listing/');
             url.searchParams.append('lastValue', this.lastValue);
             
-            if (this.userLocation) {
-                url.searchParams.append('latitude', this.userLocation.latitude);
-                url.searchParams.append('longitude', this.userLocation.longitude);
-            }
 
             const response = await fetch(url);
             const data = await response.json();
@@ -261,10 +239,6 @@ class NearbyListings {
             const url = new URL('https://virlo.vercel.app/listing/');
             url.searchParams.append('lastValue', this.lastValue);
             
-            if (this.userLocation) {
-                url.searchParams.append('latitude', this.userLocation.latitude);
-                url.searchParams.append('longitude', this.userLocation.longitude);
-            }
 
             // إضافة skeletons للتحميل
             const loadingContainer = document.createElement('div');
