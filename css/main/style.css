@@ -1,0 +1,75 @@
+:root {
+    /* Colors */
+    --primary-color: #e4074e;
+    --secondary-color: #FFC107;
+    --background-color: #FFFFFF;
+    --navbar-bg-color: #1c1c28;
+    --text-color: #333333;
+    --muted-text-color: #888888;
+    --input-bg-color: #F5F5F5;
+    --card-bg-color: #FFFFFF;
+    --border-color: #0f0d0dfd;
+    --backgroundColor-section2:#94959a;
+    --footer-color:#a4afc6;
+  
+    /* Typography */
+    --primary-font: 'Poppins', sans-serif;
+    --secondary-font: 'Roboto', sans-serif;
+    --heading-font-weight: 800;
+    --body-font-weight: 400;
+    --base-font-size: 16px;
+    --heading-size-large: 3rem;
+    --heading-size-medium: 2rem;
+    --heading-size-small: 1.5rem;
+  
+    /* Sizing */
+    --button-padding: 0.75rem 1.5rem;
+    --input-padding: 0.75rem;
+    --border-radius: 20px;
+  
+    /* Transitions */
+    --transition-duration: 0.3s;
+    --transition-ease: ease-in-out;
+  }
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+  body,html
+  {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+  }
+
+  a
+  {
+    text-decoration: none;
+  }
+  .hidden {
+    display: none !important;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+main {
+    flex: 1;
+}
+
+header,
+footer {
+    margin: 0;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 15px;
+}

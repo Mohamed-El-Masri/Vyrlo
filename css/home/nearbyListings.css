@@ -1,0 +1,569 @@
+/* Section Container */
+.masry-home-listings {
+    padding: 80px 0;
+    background: var(--background-color);
+    position: relative;
+}
+
+/* Section Header */
+.main {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.main h2 {
+    font-size: 32px;
+    font-weight: 800;
+    position: relative;
+    margin-bottom: 50px;
+    padding-bottom: 15px;
+}
+
+.main h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.Services {
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+}
+
+.Services::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.main h2:hover .Services::after {
+    transform: scaleX(1);
+}
+
+/* Grid Layout */
+.listings-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding-bottom: 30px;
+    width: 100%;
+    justify-content: center;
+
+}
+
+/* إزالة الكولوم لأننا نستخدم Grid */
+.listings-row > [class*='col-'] {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* Card Styles */
+.vl-card {
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    max-height: 480px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    margin: 0;
+}
+
+.vl-card:hover {
+    transform: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Section */
+.vl-card__image-wrapper {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.vl-card__image-link {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.vl-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vl-card:hover .vl-card__image {
+    transform: scale(1.1);
+}
+
+/* Status Badge */
+.vl-card__status-badge {
+    position: absolute;
+    top: 25px;
+    left: -40px;
+    width: 160px;
+    padding: 6px 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: rotate(-45deg);
+    z-index: 2;
+}
+
+.vl-card__status-badge.is-open {
+    background: #2ecc71;
+}
+
+.vl-card__status-badge.is-closed {
+    background: #e74c3c;
+}
+
+/* Category Badge */
+.vl-card__category-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Content */
+.vl-card__body {
+    flex: 1;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vl-card__content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vl-card__footer {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.vl-card__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #2c3e50;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    min-height: auto;
+}
+
+.vl-card__title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.vl-card__title-link:hover {
+    color: var(--primary-color);
+}
+
+/* Rating Section */
+.vl-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    padding: 0;
+}
+
+.vl-rating__stars {
+    color: #ffc107;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.vl-rating__count {
+    color: #777;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Info Section */
+.vl-info {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.vl-info__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    color: #666;
+}
+
+.vl-info__item i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.vl-info__item a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.vl-info__item a:hover {
+    color: var(--primary-color);
+}
+
+/* View Details Button */
+.vl-btn--primary {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 25px;
+    margin-top: 20px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.vl-btn--primary:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* Load More Button */
+.masry-load-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 200px;
+    padding: 12px 30px;
+    margin: 30px auto;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.masry-load-more:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.masry-load-more.no-more {
+    background: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+}
+
+/* Loading States */
+.button-loader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+/* Skeleton Loading */
+.skeleton-card {
+    height: 100%;
+    min-height: 450px;
+    max-height: 480px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.skeleton-card .vl-card__image-wrapper {
+    height: 200px;
+    background: #f0f0f0;
+    position: relative;
+}
+
+.skeleton-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.skeleton-title,
+.skeleton-rating,
+.skeleton-info-item,
+.skeleton-button {
+    background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 80%;
+}
+
+.skeleton-rating {
+    height: 20px;
+    width: 60%;
+}
+
+.skeleton-info-item {
+    height: 16px;
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.skeleton-button {
+    height: 40px;
+    width: 100%;
+    margin-top: auto;
+}
+
+.skeleton-badges {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.skeleton-badge {
+    height: 24px;
+    width: 100px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* تحسين أنماط Loading */
+.loading-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    width: 100%;
+    margin-top: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.skeleton-card {
+    height: 100%;
+    min-height: 450px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.skeleton-image {
+    height: 200px;
+    background: #f0f0f0;
+    position: relative;
+}
+
+.skeleton {
+    animation: shimmer 1.5s infinite;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #f8f8f8 50%,
+        #f0f0f0 100%
+    );
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Responsive Design */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+    
+    .vl-card__title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .main h2 {
+        font-size: 2.2rem;
+    }
+    
+    .vl-card__body {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .listings-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .main h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .listings-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .listings-row > [class*='col-'] {
+        width: 50%;
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .masry-home-listings {
+        padding: 60px 0;
+    }
+    
+    .main h2 {
+        font-size: 28px;
+    }
+    
+    .vl-card__image-wrapper {
+        height: 200px;
+    }
+    
+    .vl-card__status-badge {
+        width: 140px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .listings-row > [class*='col-'] {
+        width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .listings-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .main h2 {
+        font-size: 24px;
+    }
+    
+    .vl-card__body {
+        padding: 15px;
+    }
+    
+    .masry-load-more {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .vl-card__status-badge {
+        width: 130px;
+    }
+}
+
+/* Animations */
+@keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Print Styles */
+@media print {
+    .masry-home-listings {
+        padding: 20px 0;
+    }
+    
+    .vl-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    .masry-load-more {
+        display: none;
+    }
+}

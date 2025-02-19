@@ -1,0 +1,516 @@
+/* Main Navigation */
+.masry-main-nav {
+    background-color: var(--navbar-bg-color); 
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.masry-nav-item {
+    display: inline-block;
+   
+}
+.masry-nav-item a{
+    color: #ffffff;
+   
+}
+.masry-nav-item a:hover{
+    color: var(--primary-color);
+   
+}
+.masry-nav-item a.active{
+    color: var(--primary-color);
+}
+
+.masry-nav-link {
+    color: #ffffff ;
+}
+
+.masry-nav-link.active {
+    color: var(--primary-color); 
+}
+
+.masry-nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Enhanced Dropdown Menu Styles */
+.masry-dropdown-menu {
+    background: linear-gradient(180deg, #1c1c28 0%, #1a1a25 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.masry-dropdown-menu.show {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    min-width: 600px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Custom Scrollbar */
+.masry-dropdown-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.masry-dropdown-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.masry-dropdown-menu::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+/* Category Item Styling */
+.masry-dropdown-item {
+    color: var(--footer-color);
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 8px;
+}
+
+.masry-dropdown-item:hover {
+    background: rgba(228, 7, 78, 0.1);
+    transform: translateX(5px);
+    border-color: rgba(228, 7, 78, 0.3);
+}
+
+.masry-dropdown-item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.masry-dropdown-item:hover img {
+    background: rgba(228, 7, 78, 0.2);
+    transform: scale(1.1) rotate(5deg);
+}
+
+.masry-dropdown-item span {
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.masry-dropdown-item:hover span {
+    color: var(--primary-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .masry-dropdown-menu.show {
+        grid-template-columns: 1fr;
+        min-width: 100%;
+        max-height: 50vh;
+    }
+
+    .masry-dropdown-item {
+        padding: 10px;
+    }
+}
+
+/* Dropdown Styles */
+.masry-dropdown-menu {
+    background-color: var(--navbar-bg-color);
+}
+
+.masry-dropdown-menu.show {
+    width: 60vw;
+    height: fit-content;
+    columns: 3;
+    overflow-x: hidden;
+}
+
+.masry-dropdown-item {
+    color: var(--footer-color);
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.masry-dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.masry-dropdown-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--primary-color);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.masry-dropdown-item:hover::before {
+    transform: scaleY(1);
+}
+
+.masry-dropdown-toggle {
+    color: white !important;
+    transition: color 0.3s ease;
+}
+
+.masry-dropdown-toggle:hover,
+.masry-dropdown-toggle:focus,
+.masry-dropdown-toggle[aria-expanded="true"] {
+    color: var(--primary-color) !important;
+}
+
+.nav-link.masry-dropdown-toggle::after {
+    color: inherit;
+}
+
+/* Logo and Icons */
+.masry-logo {
+    width: 123px;
+    height: 43px;
+    margin: .5rem;
+}
+
+.small-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Add Business Button */
+.masry-add-business {
+    color: var(--primary-color);
+    background-color: white;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+}
+
+.masry-add-business:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Toggler Styles */
+.masry-toggler {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transition: .5s ease-in-out;
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}
+
+.masry-toggler-bar {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: white;
+    border-radius: 1px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+    margin: 0;
+    padding: 0;
+}
+
+/* Toggler States */
+.masry-toggler.collapsed .masry-toggler-bar.top-bar {
+    top: 0px;
+    transform: rotate(0deg);
+}
+
+.masry-toggler.collapsed .masry-toggler-bar.middle-bar {
+    top: 10px;
+    opacity: 1;
+}
+
+.masry-toggler.collapsed .masry-toggler-bar.bottom-bar {
+    top: 20px;
+    transform: rotate(0deg);
+}
+
+.masry-toggler .masry-toggler-bar.top-bar {
+    top: 10px;
+    transform: rotate(135deg);
+}
+
+.masry-toggler .masry-toggler-bar.middle-bar {
+    opacity: 0;
+}
+
+.masry-toggler .masry-toggler-bar.bottom-bar {
+    top: 10px;
+    transform: rotate(-135deg);
+}
+
+/* Enhanced User Navigation Styles */
+.masry-user-dropdown {
+    color: white !important;
+    background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    padding: 5px 15px;
+    border-radius: 25px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.masry-user-dropdown::after {
+    content: '';
+    border-top: 0.3em solid white;
+    border-right: 0.3em solid transparent;
+    border-left: 0.3em solid transparent;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.masry-user-dropdown[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
+.masry-user-name {
+    color: white;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.masry-user-name::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.masry-user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Hover Effects */
+.masry-user-dropdown:hover {
+    background: linear-gradient(145deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.masry-user-dropdown:hover .masry-user-name::after {
+    width: 100%;
+}
+
+.masry-user-dropdown:hover .masry-user-image,
+.masry-user-dropdown[aria-expanded="true"] .masry-user-image {
+    border-color: var(--primary-color);
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 20px rgba(228, 7, 78, 0.3);
+}
+
+/* Active State */
+.masry-user-dropdown[aria-expanded="true"] {
+    background: linear-gradient(145deg, rgba(228, 7, 78, 0.1) 0%, rgba(228, 7, 78, 0.05) 100%);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.masry-user-dropdown[aria-expanded="true"] .masry-user-name {
+    color: var(--primary-color);
+}
+
+.masry-user-dropdown[aria-expanded="true"] .masry-user-name::after {
+    width: 100%;
+}
+
+.masry-user-dropdown:hover,
+.masry-user-dropdown[aria-expanded="true"] {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.masry-user-menu.show {
+    width: 10rem;
+    columns: 1;
+    overflow-x: hidden;
+}
+
+.masry-user-menu.show li {
+    display: block;
+}
+
+/* User Dropdown Menu Styling */
+.masry-user-menu {
+    background-color: var(--navbar-bg-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-top: 10px;
+    min-width: 200px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.masry-user-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--navbar-bg-color);
+    transform: rotate(45deg);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Login Button */
+.masry-login-btn {
+    color: white;
+    text-decoration: none;
+    padding-right: 1rem;
+}
+
+.masry-login-btn:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .masry-search-wrapper {
+        width: auto;
+        margin-right: 10px;
+    }
+    
+    .masry-select-btn {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+}
+
+/* Enhanced Header Buttons */
+.masry-header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Login Button Styling */
+.masry-login-btn {
+    color: white;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.masry-login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.masry-login-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(228, 7, 78, 0.2);
+}
+
+.masry-login-btn:hover::before {
+    left: 100%;
+}
+
+/* Add Business Button Styling */
+.masry-add-business {
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 4px 15px rgba(228, 7, 78, 0.2);
+}
+
+.masry-plus-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.masry-add-business:hover {
+    background: transparent;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(228, 7, 78, 0.3);
+}
+
+.masry-add-business:hover .masry-plus-icon {
+    transform: rotate(180deg);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .masry-header-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .masry-login-btn,
+    .masry-add-business {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}
+
+
