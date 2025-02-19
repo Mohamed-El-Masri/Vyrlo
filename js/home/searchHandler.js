@@ -19,6 +19,7 @@ class CustomSelect {
         this.isOpen = false;
     }
 
+    
     bindEvents() {
         // Toggle dropdown
         this.element.querySelector('.masry-select__header').addEventListener('click', () => {
