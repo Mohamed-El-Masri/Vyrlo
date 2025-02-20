@@ -1,0 +1,45 @@
+
+  
+.breadcrumb-section
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../images/background/banner-2\ \(1\).jpg);
+    background-size: cover;
+    background-repeat:no-repeat ;
+    width: 100%;
+    height: 20rem;
+    margin-bottom: 4rem;
+    
+}
+
+.layer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #19365fa3;
+    width: 100%;
+    height: 24rem;
+    z-index: 1;
+    
+}
+
+.content-data{
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+.breadcrumb-section h2 {
+    font-family: 'Poppins', sans-serif; /* Modern and readable font */
+    font-size: 32px; /* Large enough to be a heading */
+    font-weight: 700; /* Bold for emphasis */
+    color: #fff; /* White for contrast against a dark background */
+}
+
+.breadcrumb-section p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px; /* Readable but smaller than the heading */
+    font-weight: 400; /* Regular weight for body text */
+    color: #ddd; /* Light gray for subtle contrast */
+}
