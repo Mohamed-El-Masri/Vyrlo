@@ -1,0 +1,203 @@
+:root {
+    /* Colors */
+    --primary-color: #e4074e;
+    --secondary-color: #eef4fb;
+    --background-color: #FFFFFF;
+    --navbar-bg-color: #1C1C28;
+    --text-color: #333333;
+    --muted-text-color: #888888;
+    --input-bg-color: #F5F5F5;
+    --card-bg-color: #FFFFFF;
+    --border-color: #0f0d0dfd;
+
+    /* Typography */
+    --primary-font: 'Poppins', sans-serif;
+    --secondary-font: 'Roboto', sans-serif;
+    --heading-font-weight: 800;
+    --body-font-weight: 400;
+    --base-font-size: 16px;
+    --heading-size-large: 3rem;
+    --heading-size-medium: 2rem;
+    --heading-size-small: 1.5rem;
+
+    /* Sizing */
+    --button-padding: 0.75rem 1.5rem;
+    --input-padding: 0.75rem;
+    --border-radius: 20px;
+
+    /* Transitions */
+    --transition-duration: 0.3s;
+    --transition-ease: ease-in-out;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
+.list-box {
+    border-top: 1px solid #eaeaea;
+    padding: 1.5rem;
+}
+
+h6 {
+    font-weight: 600;
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.star-rating i {
+    color: gold;
+}
+
+.list-image {
+    overflow: hidden;
+    padding: 0;
+}
+
+.list-image .image {
+
+    border-radius: 10px;
+    z-index: -1;
+
+}
+
+.listing-badge {
+ 
+    position: absolute !important;
+    top: 50px !important;
+    left: 12px !important;
+    padding: 7px !important;
+    color: white;
+    transform: rotate(-45deg) !important;
+    transform-origin: left top;
+    margin-left: -46px;
+    margin-top: 11px;
+    white-space: nowrap;
+    width: 133px !important;
+    height: auto;
+    z-index: 3;
+
+}
+
+h6.userListing
+{
+    color: var(--main-color);
+
+}
+
+
+h6.userListing ,.pricing-listing h3
+{
+    font-family:"Barlow", serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+.list-box h5{
+    font-weight: 670;
+    font-size: 1.8rem;
+
+}
+.active-badge {
+    background: #28a745;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 12px;
+}
+
+.non-active-badge {
+    background: #dc3545;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 12px;
+}
+
+.boosted-badge {
+    background: #28a745;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 12px;
+}
+
+.list-box {
+    align-items: center;
+}
+
+.list-title a {
+    color: #2D3954;
+}
+
+.list-title a:hover {
+    color: var(--primary-color);
+}
+
+
+
+.btns a {
+    padding: 1rem;
+    background-color: #e4e8ef;
+    color: #636a7b;
+    font-size: .9rem;
+    border-radius: 50px;
+    font-weight: 500;
+    padding: 5px 15px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.btns a:hover {
+    color: white;
+    background-color: var(--primary-color);
+}
+.remanining-listing
+{
+    justify-content: center;
+    gap:1rem
+}
+.remainning {
+    /* display: flex; */
+    color: var(--primary-color);
+    padding-bottom: .5rem;
+    background-color: #fee6ec;
+    border-radius: 10px;
+    padding: .5rem;
+    margin-bottom: .5rem;
+    justify-content: center;
+
+    /* margin-left: 1rem; */
+}
+
+a.hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 1400px) {
+    .list-image .image {
+        height: 15rem;
+        border-radius: 5px;
+    }
+
+    .list-content {
+        text-align: center;
+    }
+
+
+    .list-box {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+main *
+{
+  font-family:"Barlow", serif;
+}
