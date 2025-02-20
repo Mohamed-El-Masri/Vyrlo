@@ -3,11 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore all listings on Vyrlo, your go-to platform for discovering local businesses and services.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description"
+        content="Explore all listings on Vyrlo, your go-to platform for discovering local businesses and services.">
     <meta name="keywords" content="Vyrlo, LocalNeed, listings, businesses, services, products, local">
     <meta name="author" content="MohamedTayee">
-    <title>Vyrlo - All Listings</title>
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="dns-prefetch" href="https://virlo.vercel.app">
+    <title>All Listings - Vyrlo</title>
     <!-- Favicon -->
     <link rel="icon" href="../images/favIcon.png" type="image/png">
     <!--bootstrap CSS  -->
@@ -21,7 +24,7 @@
 
     <!-- main style -->
     <link rel="stylesheet" href="../css/main/style.css">
-   
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/main/header.css">
@@ -32,40 +35,148 @@
     <link rel="stylesheet" href="../css/allListings/breadcrumb.css">
     <link rel="stylesheet" href="../css/allListings/cards-section.css">
     <link rel="stylesheet" href="../css/allListings/sidebarFilteration.css">
-   
+    <link rel="stylesheet" href="../css/pages/allListings.css">
 
+    <!-- Add Utils CSS -->
+    <link rel="stylesheet" href="../css/utils/animations.css">
+
+    <script>
+        // Check if browser supports Web Workers
+        if (typeof Worker !== 'undefined') {
+            // Create a global worker instance
+            window.listingsWorker = new Worker('../js/workers/listings.worker.js');
+        } else {
+            console.warn('Your browser doesn\'t support Web Workers');
+        }
+    </script>
+
+    <!-- Add Utils JS -->
+    <script type="module">
+        import { securityManager } from '../js/utils/security.js';
+        import { performanceManager } from '../js/utils/performanceManager.js';
+        import { uiManager } from '../js/utils/uiManager.js';
+
+        window.securityManager = securityManager;
+        window.performanceManager = performanceManager;
+        window.uiManager = uiManager;
+    </script>
+    
+    <!-- Initialize Utils -->
+    <script type="module">
+        import { initializeUtils } from '../js/utils/initialize.js';
+        window.addEventListener('DOMContentLoaded', initializeUtils);
+    </script>
 
 </head>
 
 <body>
-    <header id="header">
-
-    </header>
+    <header id="header"></header>
     <section id="getStarted">
+
+
     </section>
+    <main class="masry-listings-page">
+        <div class="masry-listings-hero">
+            <div class="container">
+                <h1>Discover Local <span class="color">Businesses</span></h1>
+                <p>Find the perfect local service for your needs</p>
+            </div>
+        </div>
 
+        <div class="container">
+            <div class="masry-listings-grid">
+                <!-- Sidebar Filters -->
+                <aside class="masry-filters">
+                    <div class="filter-card">
+                        <h3></h3>
+                        <i class="bi bi-funnel"></i>
+                        Filters
+                        </h3>
 
-    <main>
-      
+                        <!-- Keyword Search -->
+                        <div class="filter-group">
+                            <label>Keywords</label>
+                            <div class="masry-search__field">
+                                <i class="bi bi-search"></i>
+                                <input type="text" placeholder="Search keywords...">
+                            </div>
+                        </div>
 
+                        <!-- Location Filter -->
+                        <div class="filter-group">
+                            <label>Location</label>
+                            <div class="masry-search__field">
+                                <i class="bi bi-geo-alt"></i>
+                                <input type="text" placeholder="Select location">
+                            </div>
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div class="filter-group">
+                            <label>Category</label>
+                            <div class="masry-search__field">
+                                <i class="bi bi-grid"></i>
+                                <input type="text" placeholder="Select category">
+                            </div>
+                        </div>
+
+                        <!-- Active Filters -->
+                        <div class="active-filters">
+                            <!-- Will be populated dynamically -->
+                        </div>
+
+                        <!-- Clear Filters -->
+                        <button class="clear-filters">
+                            <i class="bi bi-x-circle"></i>
+                            Clear All Filters
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="masry-listings-content">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-count">
+                            <span class="count">0</span> listings found
+                        </div>
+                        <div class="results-sort">
+                            <select>
+                                <option value="newest">Newest First</option>
+                                <option value="rating">Highest Rated</option>
+                                <option value="name">Name A-Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Results Grid -->
+                    <div class="listings-grid">
+                        <!-- Will be populated dynamically -->
+                    </div>
+
+                    <!-- Load More -->
+                    <button class="masry-load-more">
+                        <span>Load More</span>
+                        <div class="loader"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
     </main>
 
-
-    <footer id="footer">
-
-    </footer>
+    <footer id="footer"></footer>
 
 
     <!-- scripts -->
     <!-- JWT Decode -->
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-    
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom Scripts - Correct Order -->
     <script src="../js/main/authService.js"></script>
     <script src="../js/main/auth.js"></script>
@@ -73,12 +184,13 @@
 
     <!-- Additional Scripts -->
     <script type="module" src="../js/main/getCategories.js"></script>
- 
-    
+
+
     <!-- all listings page scripts -->
     <script src="../js/allListings/breadcrumb.js"></script>
     <script src="../js/allListings/cards-section.js"></script>
     <script type="module" src="../js/allListings/filteration-handeling.js"></script>
+    <script type="module" src="../js/pages/allListings.js"></script>
 
 </body>
 

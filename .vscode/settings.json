@@ -1,0 +1,12 @@
+
+{
+    "liveServer.settings.CustomHeader": {
+        "Content-Type": "application/javascript"
+    },
+    "liveServer.settings.NoBrowser": false,
+    "liveServer.settings.ignoreFiles": [
+        ".vscode/**",
+        "**/*.scss",
+        "**/*.sass"
+    ]
+}

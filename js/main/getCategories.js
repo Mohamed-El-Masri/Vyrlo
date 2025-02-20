@@ -177,3 +177,4 @@ window.CategoryManager = CategoryManager;
 
 
 
+console.log(CategoryManager.getInstance());
