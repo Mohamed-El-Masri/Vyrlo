@@ -1,40 +1,26 @@
-/* Section Container */
+/* 1. Section Container & Header */
 .masry-home-listings {
-    padding: 80px 0;
+    padding: 4rem 0;
     background: var(--background-color);
-    position: relative;
+    min-height: 400px; /* ضمان وجود مساحة للمحتوى */
 }
 
-/* Section Header */
 .main {
-    margin-bottom: 40px;
     text-align: center;
+    margin-bottom: 3rem;
 }
 
 .main h2 {
-    font-size: 32px;
-    font-weight: 800;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700;
     position: relative;
-    margin-bottom: 50px;
-    padding-bottom: 15px;
-}
-
-.main h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: var(--primary-color);
-    border-radius: 2px;
+    padding-bottom: 1rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 .Services {
     color: var(--primary-color);
     position: relative;
-    display: inline-block;
 }
 
 .Services::after {
@@ -46,23 +32,22 @@
     height: 2px;
     background: var(--primary-color);
     transform: scaleX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s var(--transition-ease);
 }
 
 .main h2:hover .Services::after {
     transform: scaleX(1);
 }
 
-/* Grid Layout */
+/* 2. Grid Layout - Mobile First */
 .listings-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    margin: 0;
-    padding-bottom: 30px;
-    width: 100%;
-    justify-content: center;
-
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 0 auto;
+    max-width: 1320px;
+    padding: 0 1rem;
+    min-height: 200px; /* ضمان وجود مساحة للمحتوى */
 }
 
 /* إزالة الكولوم لأننا نستخدم Grid */
@@ -72,32 +57,49 @@
     margin: 0;
 }
 
-/* Card Styles */
+/* 3. Card Design */
 .vl-card {
-    width: 100%;
-    height: 100%;
-    min-height: 450px;
-    max-height: 480px;
-    display: flex;
-    flex-direction: column;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     overflow: hidden;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 400px;
+    opacity: 1 !important; /* تأكد من ظهور الكروت */
+    transform: none !important; /* إزالة التحويل المبدئي */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vl-card.fade-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .vl-card:hover {
-    transform: none;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(228, 7, 78, 0.1);
 }
 
-/* Image Section */
+/* Card Link Styles */
+.vl-card__link {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.vl-card__link:hover {
+    transform: translateY(-5px);
+}
+
+/* 4. Card Image Section */
 .vl-card__image-wrapper {
-    width: 100%;
-    height: 200px;
     position: relative;
+    padding-top: 66%;
     background: #f8f9fa;
     overflow: hidden;
 }
@@ -109,40 +111,34 @@
 }
 
 .vl-card__image {
+    position: absolute;
+    top: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.5s ease;
 }
 
 .vl-card:hover .vl-card__image {
     transform: scale(1.1);
 }
 
-/* Status Badge */
+/* 5. Status Badges */
 .vl-card__status-badge {
     position: absolute;
-    top: 25px;
-    left: -40px;
-    width: 160px;
-    padding: 6px 0;
-    font-size: 0.75rem;
-    font-weight: 700;
+    top: 1rem;
+    left: 1rem;
+    right: auto;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: white;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transform: rotate(-45deg);
     z-index: 2;
 }
 
-.vl-card__status-badge.is-open {
-    background: #2ecc71;
-}
-
-.vl-card__status-badge.is-closed {
-    background: #e74c3c;
-}
+.is-open { background: #2ecc71; }
+.is-closed { background: #e74c3c; }
 
 /* Category Badge */
 .vl-card__category-badge {
@@ -159,14 +155,12 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Card Content */
+/* 6. Card Content */
 .vl-card__body {
+    padding: 1.25rem;
     flex: 1;
-    width: 100%;
-    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 .vl-card__content {
@@ -185,26 +179,18 @@
 }
 
 .vl-card__title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #2c3e50;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.4;
-    min-height: auto;
-}
-
-.vl-card__title-link {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.2s ease;
-}
-
-.vl-card__title-link:hover {
-    color: var(--primary-color);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    max-height: 2.8em;
 }
 
 /* Rating Section */
@@ -218,29 +204,33 @@
 
 .vl-rating__stars {
     color: #ffc107;
-    font-size: 0.9rem;
+    font-size: 1rem;
     letter-spacing: 2px;
+    display: flex;
+    gap: 2px;
 }
 
 .vl-rating__count {
     color: #777;
     font-size: 0.85rem;
     font-weight: 500;
+    margin-left: 8px;
+    display: none;
 }
 
-/* Info Section */
+/* 7. Info Section */
 .vl-info {
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: auto;
+    padding-top: 1rem;
     border-top: 1px solid #eee;
 }
 
 .vl-info__item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 6px;
-    color: #666;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--muted-text-color);
 }
 
 .vl-info__item i {
@@ -258,6 +248,13 @@
 
 .vl-info__item a:hover {
     color: var(--primary-color);
+}
+
+.vl-info__item.email {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 /* View Details Button */
@@ -282,29 +279,27 @@
     box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
 }
 
-/* Load More Button */
+/* 8. Load More Button */
 .masry-load-more {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-width: 200px;
-    padding: 12px 30px;
-    margin: 30px auto;
+    display: block;
+    margin: 2rem auto;
+    padding: 0.75rem 2.5rem;
+    min-width: 150px;
     background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 25px;
-    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    padding-right: 40px; /* Space for loader */
 }
 
 .masry-load-more:not(:disabled):hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+    background-color: #c80543;
+    box-shadow: 0 4px 12px rgba(228, 7, 78, 0.2);
 }
 
 .masry-load-more.no-more {
@@ -314,6 +309,10 @@
     transform: none;
     box-shadow: none;
     border: 1px solid #dee2e6;
+    background-color: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* Loading States */
@@ -329,16 +328,68 @@
     top: 50%;
     transform: translateY(-50%);
     display: none;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+    display: none;
 }
 
 /* Skeleton Loading */
-.skeleton-card {
-    height: 100%;
-    min-height: 450px;
-    max-height: 480px;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
+.loading-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0 1rem;
+    margin: 0 auto;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    max-width: 1320px;
+}
+
+@media (max-width: 1200px) {
+    .loading-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .loading-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .loading-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.loading-container.fade-out {
+    opacity: 0;
+}
+
+/* Skeleton Elements */
+.skeleton-title {
+    height: 24px;
+    margin-bottom: 16px;
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+    width: 80%;
+}
+
+.skeleton-meta {
+    margin-top: 12px;
 }
 
 .skeleton-card .vl-card__image-wrapper {
@@ -367,6 +418,9 @@
 .skeleton-title {
     height: 24px;
     width: 80%;
+    height: 24px;
+    margin-bottom: 12px;
+    border-radius: 4px;
 }
 
 .skeleton-rating {
@@ -399,9 +453,70 @@
     border-radius: 12px;
 }
 
+.skeleton-pulse {
+    background: linear-gradient(90deg, 
+        var(--background-color) 0%,
+        #f0f0f0 50%,
+        var(--background-color) 100%
+    );
+    background-size: 200% 100%;
+    animation: pulse 1.5s var(--transition-ease) infinite;
+}
+
+.skeleton-image {
+    height: 200px;
+    background: #f0f0f0;
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    background: #f0f0f0;
+}
+
+.skeleton {
+    animation: shimmer 1.5s infinite;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #f8f8f8 50%,
+        #f0f0f0 100%
+    );
+    background-size: 200% 100%;
+}
+
 @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes pulse {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Card Status Badges */
+.vl-card__badges {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.vl-card__status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.vl-card__status.is-open {
+    background: #28a745;
+    color: white;
+}
+
+.vl-card__status.is-closed {
+    background: #dc3545;
+    color: white;
 }
 
 /* تحسين أنماط Loading */
@@ -422,6 +537,7 @@
     border-radius: 12px;
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    aspect-ratio: 1 / 1.4; /* نسبة مماثلة للكروت الفعلية */
 }
 
 .skeleton-image {
@@ -441,12 +557,225 @@
     background-size: 200% 100%;
 }
 
-@keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+/* Improved Skeleton Styles */
+.skeleton-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    height: 100%;
+    min-height: 400px;
 }
 
-/* Responsive Design */
+.skeleton-image {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    position: relative;
+}
+
+.skeleton-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 80px;
+    height: 24px;
+    border-radius: 20px;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 90%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.skeleton-rating {
+    height: 20px;
+    width: 120px;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.skeleton-info {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.skeleton-info-item {
+    height: 16px;
+    width: 70%;
+    margin-bottom: 0.75rem;
+    border-radius: 4px;
+}
+
+.skeleton-pulse {
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    background: linear-gradient(
+        90deg,
+        var(--background-color) 0%,
+        #f0f0f0 50%,
+        var(--background-color) 100%
+    );
+    background-size: 200% 100%;
+}
+
+/* تحسين الانيميشن */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Responsive Skeleton */
+@media (max-width: 1200px) {
+    .loading-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .loading-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .loading-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .skeleton-card {
+        height: 380px;
+    }
+}
+
+/* Skeleton Loading Improvements */
+.skeleton-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    overflow: hidden;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.skeleton-card .vl-card__image-wrapper {
+    width: 100%;
+    padding-top: 66%;
+    position: relative;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+/* Status Badge Skeleton */
+.skeleton-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 65px;
+    height: 26px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.8);
+}
+
+/* Content Area */
+.skeleton-content {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+/* Title Skeleton */
+.skeleton-title {
+    height: 22px;
+    width: 85%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+/* Rating Skeleton */
+.skeleton-rating {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.skeleton-star {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+}
+
+/* Info Items */
+.skeleton-info {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.skeleton-info-item {
+    height: 16px;
+    margin-bottom: 0.75rem;
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+.skeleton-info-item:nth-child(1) { width: 75%; }
+.skeleton-info-item:nth-child(2) { width: 65%; }
+.skeleton-info-item:nth-child(3) { width: 85%; }
+
+/* Pulse Animation */
+.skeleton-pulse {
+    position: relative;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.skeleton-pulse::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.3) 50%,
+        transparent 100%
+    );
+    animation: shimmer 1.5s infinite ease-out;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive Adjustments */
+.loading-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* 10. Responsive Design */
 @media (min-width: 1400px) {
     .container {
         max-width: 1320px;
@@ -492,6 +821,12 @@
     }
 }
 
+@media (min-width: 768px) {
+    .listings-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .masry-home-listings {
         padding: 60px 0;
@@ -509,12 +844,25 @@
         width: 140px;
         font-size: 0.7rem;
     }
+    .listings-row {
+        gap: 16px;
+    }
+    
+    .vl-card {
+        min-height: 400px;
+    }
 }
 
 @media (max-width: 767px) {
     .listings-row > [class*='col-'] {
         width: 100%;
         flex: 0 0 100%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .listings-row {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -532,7 +880,7 @@
     }
     
     .masry-load-more {
-        width: 100%;
+        width: calc(100% - 2rem);
         max-width: 280px;
     }
     
@@ -541,7 +889,7 @@
     }
 }
 
-/* Animations */
+/* 11. Animations */
 @keyframes spin {
     to { transform: translateY(-50%) rotate(360deg); }
 }
@@ -565,5 +913,121 @@
     
     .masry-load-more {
         display: none;
+    }
+}
+
+/* تحسين Skeleton Loading */
+.loading-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.skeleton-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    height: 400px; /* ارتفاع ثابت مطابق للكروت */
+    display: flex;
+    flex-direction: column;
+}
+
+.skeleton-card .vl-card__image-wrapper {
+    width: 100%;
+    padding-top: 66%; /* نفس نسبة الصورة في الكروت الفعلية */
+    position: relative;
+    background: #f0f0f0;
+}
+
+.skeleton-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem; /* تعديل موقع البادج ليكون في اليسار */
+    width: 60px;
+    height: 24px;
+    border-radius: 20px;
+    background: #f0f0f0;
+}
+
+.skeleton-content {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 85%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.skeleton-rating {
+    height: 20px;
+    width: 100px;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.skeleton-info {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.skeleton-info-item {
+    height: 16px;
+    margin-bottom: 0.75rem;
+    border-radius: 4px;
+}
+
+.skeleton-info-item:nth-child(1) { width: 70%; }
+.skeleton-info-item:nth-child(2) { width: 60%; }
+.skeleton-info-item:nth-child(3) { width: 80%; }
+
+.skeleton-pulse {
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #f8f8f8 50%,
+        #f0f0f0 100%
+    );
+    background-size: 200% 100%;
+}
+
+/* تحسين الانيميشن */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Responsive Skeleton */
+@media (max-width: 1200px) {
+    .loading-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .loading-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .loading-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .skeleton-card {
+        height: 380px;
     }
 }
