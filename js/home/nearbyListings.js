@@ -523,4 +523,3 @@ class NearbyListings {
 document.addEventListener('DOMContentLoaded', () => {
     new NearbyListings();
 });
-
