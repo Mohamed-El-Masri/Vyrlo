@@ -35,53 +35,85 @@ class CategoryManager {
         }
     }
 
-    updateUI() {
-        this.updateHeader();
-        this.updateFooter();
-        this.updateSearchDropdown();
+    async initialize() {
+        console.log('CategoryManager: Initializing...');
+        try {
+            await this.loadCategories();
+            console.log('CategoryManager: Categories loaded successfully');
+        } catch (error) {
+            console.error('CategoryManager: Failed to initialize:', error);
+        }
     }
 
-    updateHeader() {
+    async loadCategories() {
+        // محاولة تحميل من الكاش أولاً
+        const cached = localStorage.getItem('categories');
+        if (cached) {
+            const { data, timestamp } = JSON.parse(cached);
+            const oneHour = 60 * 60 * 1000;
+            
+            if (Date.now() - timestamp < oneHour) {
+                console.log('CategoryManager: Using cached categories');
+                this.categories = data;
+                this.updateUI();
+                return;
+            }
+        }
+        
+        // إذا لم يكن هناك كاش أو انتهت صلاحيته
+        await this.fetchCategories();
+    }
+
+    updateUI() {
+        console.log('CategoryManager: Updating UI');
+        
+        // تحديث Explore dropdown في Header
+        this.updateExploreDropdown();
+        
+        // تحديث Footer categories
+        this.updateFooterCategories();
+    }
+
+    updateExploreDropdown() {
         const dropdownMenu = document.querySelector('.masry-dropdown-menu');
-        if (!dropdownMenu) return;
+        if (!dropdownMenu) {
+            console.log('CategoryManager: Dropdown menu not found, will retry...');
+            // محاولة مرة أخرى بعد تأكد تحميل DOM
+            setTimeout(() => this.updateExploreDropdown(), 100);
+            return;
+        }
 
         const categoriesHTML = this.categories.map(category => `
             <li>
-                <a class="dropdown-item masry-dropdown-item" href="../pages/allListings.html?id=${category._id}">
-                    <i class="fas fa-${category.iconOne || this.getDefaultIcon(category.categoryName)}"></i>
+                <a class="dropdown-item masry-dropdown-item" 
+                   href="../pages/allListings.html?category=${category._id}">
+                    <i class="fas fa-${this.getCategoryIcon(category)}"></i>
                     <span>${category.categoryName}</span>
                 </a>
             </li>
         `).join('');
 
         dropdownMenu.innerHTML = categoriesHTML;
+        console.log('CategoryManager: Explore dropdown updated');
     }
 
-    updateFooter() {
+    updateFooterCategories() {
         const footerCategories = document.querySelector('.masry-footer__categories');
-        if (!footerCategories) return;
+        if (!footerCategories) {
+            console.log('CategoryManager: Footer categories not found, will retry...');
+            setTimeout(() => this.updateFooterCategories(), 100);
+            return;
+        }
 
         const categoriesHTML = this.categories.map(category => `
-            <a href="../pages/allListings.html?id=${category._id}" class="masry-footer__link">
+            <a href="../pages/allListings.html?category=${category._id}" 
+               class="masry-footer__link">
                 ${category.categoryName}
             </a>
         `).join('');
 
         footerCategories.innerHTML = categoriesHTML;
-    }
-
-    updateSearchDropdown() {
-        const searchOptions = document.querySelector('.masry-search__options');
-        if (!searchOptions) return;
-
-        const optionsHTML = this.categories.map(category => `
-            <div class="masry-search__option" data-value="${category._id}" data-category="${category.categoryName}">
-                <i class="fas fa-${category.iconOne || this.getDefaultIcon(category.categoryName)}"></i>
-                <span>${category.categoryName}</span>
-            </div>
-        `).join('');
-
-        searchOptions.innerHTML = optionsHTML;
+        console.log('CategoryManager: Footer categories updated');
     }
 
     getCategoryIcon(category) {
@@ -148,33 +180,41 @@ class CategoryManager {
         return this.categories.find(cat => cat.categoryName.toLowerCase() === name.toLowerCase());
     }
 
-    // Initialize categories from cache or fetch new ones
-    async initialize() {
-        const cached = localStorage.getItem('categories');
-        if (cached) {
-            const { data, timestamp } = JSON.parse(cached);
-            const oneHour = 60 * 60 * 1000;
-            
-            if (Date.now() - timestamp < oneHour) {
-                this.categories = data;
-                this.updateUI();
-                return;
-            }
+    navigateToListings(categoryId, source = '') {
+        const url = new URL('../pages/allListings.html', window.location.href);
+        if (categoryId) {
+            url.searchParams.set('category', categoryId);
         }
-        
-        await this.fetchCategories();
+        if (source) {
+            url.searchParams.set('source', source);
+        }
+        window.location.href = url.toString();
     }
 }
 
-// Initialize when DOM is loaded
+// Initialize immediately when the file loads
+console.log('CategoryManager: Script loaded');
+
+// Make sure CategoryManager is available globally
+window.CategoryManager = CategoryManager;
+
+// Initialize instance
+const categoryManager = CategoryManager.getInstance();
+categoryManager.initialize();
+
+// تهيئة عند اكتمال تحميل DOM
 document.addEventListener('DOMContentLoaded', () => {
-    const categoryManager = CategoryManager.getInstance();
+    console.log('CategoryManager: DOM loaded, initializing...');
     categoryManager.initialize();
+});
+
+// تهيئة عند تحميل component.js
+document.addEventListener('componentLoaded', () => {
+    console.log('CategoryManager: Components loaded, updating UI...');
+    categoryManager.updateUI();
 });
 
 // Export for use in other files
 window.CategoryManager = CategoryManager;
-
-
 
 console.log(CategoryManager.getInstance());

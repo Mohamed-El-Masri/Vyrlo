@@ -1,0 +1,32 @@
+
+HTML vs JS vs CSS Class Mismatches:
+
+1. Filter Containers:
+- HTML: masry-filter-group
+- JS: listings-filter
+- CSS: masry-filter-section
+التصحيح: توحيد الكلاس ليكون masry-filter-section
+
+2. Status Filter:
+- HTML: status-filter
+- JS: masry-status-filter
+- CSS: masry-status-filter
+التصحيح: توحيد الكلاس ليكون masry-status-filter
+
+3. Listing Cards:
+- HTML: masry-listing-card
+- JS: listings-card
+- CSS: both styles exist
+التصحيح: توحيد الكلاس ليكون masry-listing-card
+
+4. Active Filters:
+- HTML: activeFilters
+- JS: masry-active-filters
+- CSS: masry-active-filters
+التصحيح: توحيد الجميع ليكون masry-active-filters
+
+5. Search Inputs:
+- HTML: keywordSearch
+- JS: masry-search__input
+- CSS: masry-search__input
+التصحيح: إضافة الكلاسات للـ HTML

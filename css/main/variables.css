@@ -1,0 +1,90 @@
+:root {
+    /* Brand Colors */
+    --primary-rgb: 228, 7, 78;
+    --primary: rgb(var(--primary-rgb));
+    --primary-light: rgba(var(--primary-rgb), 0.1);
+    --primary-dark: #c2063e;
+    
+    --secondary: #FFC107;
+    --secondary-rgb: 255, 193, 7;
+    
+    /* Surface Colors */
+    --surface-main: #FFFFFF;
+    --surface-light: #f8f9fa;
+    --surface-dark: #1c1c28;
+    
+    /* Text Colors */
+    --text-primary: #333333;
+    --text-secondary: #888888;
+    --text-light: #FFFFFF;
+    
+    /* Status Colors */
+    --success: rgb(46, 204, 113);
+    --error: rgb(231, 76, 60);
+    --warning: rgb(255, 193, 7);
+    --info: rgb(52, 152, 219);
+    
+    /* Border & Shadow */
+    --border-color: rgba(0, 0, 0, 0.08);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+    
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Roboto', sans-serif;
+    --font-weight-bold: 700;
+    --font-weight-semibold: 600;
+    --font-weight-medium: 500;
+    --font-weight-regular: 400;
+    
+    /* Spacing System */
+    --space-unit: 0.25rem;
+    --space-xs: calc(var(--space-unit) * 1);  /* 4px */
+    --space-sm: calc(var(--space-unit) * 2);  /* 8px */
+    --space-md: calc(var(--space-unit) * 4);  /* 16px */
+    --space-lg: calc(var(--space-unit) * 6);  /* 24px */
+    --space-xl: calc(var(--space-unit) * 8);  /* 32px */
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-pill: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Z-index */
+    --z-header: 1000;
+    --z-modal: 2000;
+    --z-tooltip: 3000;
+    --z-toast: 4000;
+    
+    /* Grid */
+    --container-max: 1440px;
+    --container-padding: var(--space-md);
+    --grid-gap: var(--space-md);
+
+    --header-height: 80px; /* Adjust this value to match your header height */
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    --surface-main: #1c1c28;
+    --surface-light: #2d2d3d;
+    --surface-dark: #15151f;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* High Contrast Theme */
+[data-theme="high-contrast"] {
+    --primary: #000000;
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --border-color: #000000;
+}

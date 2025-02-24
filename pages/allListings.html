@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
+    <!-- تحسين SEO -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description"
-        content="Explore all listings on Vyrlo, your go-to platform for discovering local businesses and services.">
-    <meta name="keywords" content="Vyrlo, LocalNeed, listings, businesses, services, products, local">
-    <meta name="author" content="MohamedTayee">
+        content="Discover and explore local businesses in your area. Filter by category, location, rating and more.">
+    <meta name="keywords" content="local business, directory, listings, business finder, services">
+    <meta name="author" content="Vyrlo">
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <link rel="dns-prefetch" href="https://virlo.vercel.app">
-    <title>All Listings - Vyrlo</title>
+    <link rel="preconnect" href="https://virlo.vercel.app">
+    <title>All Listings | Find Local Businesses - Vyrlo</title>
     <!-- Favicon -->
     <link rel="icon" href="../images/favIcon.png" type="image/png">
-    <!--bootstrap CSS  -->
-    <link rel="stylesheet" href="../css/vendors/bootstrap.min.css">
+    <!-- إضافة Bootstrap من CDN بدلاً من الملف المحلي -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
     <!-- bootstrap Icon CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- font Awesome CSS -->
@@ -30,49 +33,227 @@
     <link rel="stylesheet" href="../css/main/footer.css">
     <link rel="stylesheet" href="../css/main/getStarted.css">
 
-    <!-- Custom CSS for All Listing Page -->
-    <link rel="stylesheet" href="../css/allListings/breadcrumb.css">
-    <link rel="stylesheet" href="../css/allListings/cards-section.css">
-    <link rel="stylesheet" href="../css/allListings/sidebarFilteration.css">
     <link rel="stylesheet" href="../css/pages/allListings.css">
 
-   
+    <link rel="preload" href="../images/defaults/listing-placeholder.svg" as="image" type="image/svg+xml"
+        fetchpriority="high" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <header id="header"></header>
-    <section id="getStarted">
+    <!-- تحسين إمكانية الوصول -->
+    <a href="#main-content" class="skip-link visually-hidden">Skip to main content</a>
 
+    <section id="getStarted"></section>
+    <main class="masry-listings" id="main-content">
+        <!-- Header -->
+        <header id="header" role="banner"></header>
 
-    </section>
-    <main class="masry-listings-page">
-       
+        <!-- Breadcrumb -->
+        <div class="masry-breadcrumb-wrapper" role="navigation" aria-label="Breadcrumb">
+            <div class="container">
+                <nav class="masry-breadcrumb" aria-label="breadcrumb">
+                    <ol class="masry-breadcrumb__list">
+                        <li class="masry-breadcrumb__item">
+                            <a href="../index.html" class="masry-breadcrumb__link">
+                                <i class="bi bi-house"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="masry-breadcrumb__item masry-breadcrumb__item--active">
+                            All Listings
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Listings Header -->
+        <header class="masry-listings-header">
+            <div class="container">
+                <div class="masry-listings-header__content">
+                    <h1 class="masry-listings__title">
+                        <i class="category-icon"></i>
+                        <span class="category-name"></span>
+                        <span class="total-count">(<span id="totalResults">0</span> Results)</span>
+                    </h1>
+                    <!-- Active Filters -->
+                    <div class="masry-active-filters" id="activeFilters" aria-live="polite"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="masry-listings-content">
+            <div class="container">
+                <div class="masry-grid">
+                    <!-- Sidebar -->
+                    <aside class="masry-sidebar" role="complementary">
+                        <form id="filterForm" class="masry-filters">
+                            <!-- Search Filters -->
+                            <div class="masry-sidebar__section">
+                                <h2 class="masry-sidebar__title">Search</h2>
+
+                                <!-- Keyword Search -->
+                                <div class="masry-search">
+                                    <label for="keywordSearch" class="visually-hidden">Search by keyword</label>
+                                    <input type="search" id="keywordSearch" class="masry-search__input"
+                                        placeholder="Search listings..." aria-label="Search listings"
+                                        autocomplete="off">
+                                    <i class="bi bi-search masry-search__icon" aria-hidden="true"></i>
+                                    <div id="keywordSuggestions" class="masry-suggestions" role="listbox"></div>
+                                </div>
+
+                                <!-- Location Search -->
+                                <div class="masry-search">
+                                    <label for="locationSearch" class="visually-hidden">Search by location</label>
+                                    <input type="search" id="locationSearch" class="masry-search__input"
+                                        placeholder="Search by location..." aria-label="Search by location"
+                                        autocomplete="off">
+                                    <i class="bi bi-geo-alt masry-search__icon" aria-hidden="true"></i>
+                                    <div id="locationSuggestions" class="masry-suggestions" role="listbox"></div>
+                                </div>
+
+                                <!-- Category Search -->
+                                <div class="masry-search">
+                                    <i class="bi bi-grid masry-search__icon"></i>
+                                    <input type="text" class="masry-search__input" id="categorySearch"
+                                        placeholder="Search categories..." autocomplete="off">
+                                    <div class="masry-suggestions" id="categorySuggestions"></div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Filters -->
+                            <div class="masry-sidebar__section">
+                                <h2 class="masry-sidebar__title">Status</h2>
+
+                                <!-- Status Filter -->
+                                <div class="masry-filter-group">
+                                    <fieldset>
+                                        <legend class="visually-hidden">Status Filter</legend>
+                                        <label class="masry-checkbox">
+                                            <input type="checkbox" name="status" value="open"
+                                                aria-label="Show only open businesses">
+                                            <span class="masry-checkbox__label">Open Now</span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+
+                                <!-- Rating Filter -->
+                                <div class="masry-filter-group">
+                                    <h3 class="masry-filter-group__title">Rating</h3>
+                                    <div class="masry-rating-filters" role="group" aria-label="Filter by rating">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reset Filters -->
+                            <button type="reset" id="resetFilters" class="masry-sidebar__reset"
+                                aria-label="Reset all filters">
+                                <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+                                Reset All Filters
+                            </button>
+                        </form>
+                    </aside>
+
+                    <!-- Listings Area -->
+                    <div class="masry-main">
+                        <!-- Sort & View Controls -->
+                        <div class="masry-controls">
+                            <!-- View Toggle -->
+                            <div class="masry-view-toggle" role="group" aria-label="Change view mode">
+                                <button class="masry-view__btn active" data-view="grid" aria-label="Grid view"
+                                    aria-pressed="true">
+                                    <i class="bi bi-grid" aria-hidden="true"></i>
+                                </button>
+                                <button class="masry-view__btn" data-view="list" aria-label="List view"
+                                    aria-pressed="false">
+                                    <i class="bi bi-list" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                            <!-- Sort -->
+                            <div class="masry-sort">
+                                <label for="sortSelect" class="masry-sort__label">Sort by:</label>
+                                <select id="sortSelect" class="masry-sort__select" aria-label="Sort listings">
+                                    <option value="rating">Highest Rated</option>
+                                    <option value="name">Name A-Z</option>
+                                    <option value="newest">Newest First</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Listings Grid -->
+                        <div id="listingsContainer" class="masry-listings-grid" role="main" aria-live="polite"></div>
+
+                        <!-- Load More -->
+                        <div class="masry-load-more">
+                            <button id="loadMore" class="masry-load-more__btn" aria-label="Load more listings">
+                                <span>Load More</span>
+                                <i class="bi bi-arrow-down" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer id="footer"></footer>
+    <footer id="footer" role="contentinfo"></footer>
 
 
     <!-- scripts -->
     <!-- JWT Decode -->
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js" defer></script>
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 
     <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <!-- Custom Scripts - Correct Order -->
-    <script src="../js/main/authService.js"></script>
-    <script src="../js/main/auth.js"></script>
-    <script src="../js/main/component.js"></script>
+    <!-- Important: Add type="module" to support ES modules -->
+    <script type="module" src="../js/services/authService.js"></script>
+    <script type="module" src="../js/main/component.js"></script>
+    <script type="module" src="../js/main/auth.js"></script>
+    <script type="module" src="../js/pages/allListings/index.js"></script>
 
     <!-- Additional Scripts -->
-    <script type="module" src="../js/main/getCategories.js"></script>
+    <script type="module" src="../js/main/getCategories.js" defer></script>
 
 
-    <!-- all listings page scripts -->  
-    <script  src="../js/pages/allListings.js"></script>
+    <!-- قبل نهاية الـ body -->
+    <template id="skeletonTemplate">
+        <div class="masry-listing-card masry-skeleton">
+            <div class="masry-skeleton__image">
+                <div class="masry-skeleton__badges">
+                    <div class="masry-skeleton__badge"></div>
+                    <div class="masry-skeleton__badge"></div>
+                </div>
+            </div>
+            <div class="masry-skeleton__content">
+                <div class="masry-skeleton__header">
+                    <div class="masry-skeleton__title"></div>
+                    <div class="masry-skeleton__rating"></div>
+                </div>
+                <div class="masry-skeleton__info">
+                    <div class="masry-skeleton__info-item"></div>
+                    <div class="masry-skeleton__info-item"></div>
+                </div>
+                <div class="masry-skeleton__description"></div>
+                <div class="masry-skeleton__footer">
+                    <div class="masry-skeleton__amenities">
+                        <div class="masry-skeleton__amenity"></div>
+                        <div class="masry-skeleton__amenity"></div>
+                        <div class="masry-skeleton__amenity"></div>
+                    </div>
+                    <div class="masry-skeleton__button"></div>
+                </div>
+            </div>
+        </div>
+    </template>
 
 </body>
 

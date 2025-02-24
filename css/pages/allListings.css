@@ -1,0 +1,1901 @@
+@import '../main/variables.css';
+@import '../main/animations.css';
+
+/* Custom Properties - Updated to match theme */
+:root {
+    /* Colors - Match with main theme */
+    --listings-primary: var(--primary-color);
+    --listings-primary-rgb: 228, 7, 78;
+    --listings-secondary: var(--secondary-color);
+    --listings-surface: var(--background-color);
+    --listings-text: var(--text-color);
+    --listings-muted: var(--muted-text-color);
+    --listings-border: var(--border-color);
+    --listings-navbar-bg: var(--navbar-bg-color);
+    
+    /* Typography - Match with main theme */
+    --listings-font-primary: var(--primary-font);
+    --listings-font-secondary: var(--secondary-font);
+    --listings-heading-weight: var(--heading-font-weight);
+    --listings-body-weight: var(--body-font-weight);
+    
+    /* Sizing & Spacing - Keep consistent */
+    --listings-max-width: 1440px;
+    --listings-sidebar-width: 300px;
+    --listings-grid-gap: 24px;
+    --listings-space: var(--button-padding);
+    --listings-radius: var(--border-radius);
+    
+    /* Transitions - Match main theme */
+    --listings-transition: var(--transition-duration) var(--transition-ease);
+}
+
+/* تحديث المتغيرات لتتناسب مع النظام المستخدم */
+:root {
+    --masry-layout-width: 1440px;
+    --masry-sidebar-width: 320px;
+    --masry-grid-gap: 24px;
+    --masry-header-height: 80px;
+    --masry-spacing: 24px;
+    
+    /* Colors */
+    --masry-primary: #e4074e;
+    --masry-primary-rgb: 228, 7, 78;
+    --masry-surface: #ffffff;
+    --masry-surface-light: #f8f9fa;
+    --masry-border: rgba(0, 0, 0, 0.08);
+    
+    /* Effects */
+    --masry-shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --masry-shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+    --masry-radius: 12px;
+    --masry-transition: 0.3s ease;
+}
+
+/* Theme Variables - Unified with main theme */
+:root {
+    /* Core Colors */
+    --listings-primary: var(--primary-color);
+    --listings-secondary: var(--secondary-color);
+    --listings-background: var(--background-color);
+    --listings-text: var(--text-color);
+    --listings-muted: var(--muted-text-color);
+    --listings-border: var(--border-color);
+    
+    /* Derived Colors */
+    --listings-primary-rgb: 228, 7, 78;
+    --listings-primary-light: rgba(var(--listings-primary-rgb), 0.1);
+    --listings-primary-dark: #c2063e;
+    
+    /* Typography */
+    --listings-title-size: 1.25rem;
+    --listings-text-size: 0.875rem;
+    --listings-small-size: 0.75rem;
+    
+    /* Spacing */
+    --listings-spacing-xs: 0.25rem;
+    --listings-spacing-sm: 0.5rem;
+    --listings-spacing-md: 1rem;
+    --listings-spacing-lg: 1.5rem;
+    --listings-spacing-xl: 2rem;
+    
+    /* Layout */
+    --listings-card-radius: var(--border-radius);
+    --listings-badge-radius: calc(var(--border-radius) / 2);
+    --listings-transition: var(--transition-duration) var(--transition-ease);
+}
+
+/* Layout Structure */
+.listings {
+    display: grid;
+    grid-template-columns: var(--listings-sidebar-width) 1fr;
+    gap: var(--listings-grid-gap);
+    max-width: var(--listings-max-width);
+    margin: 0 auto;
+    padding: var(--listings-space-xl);
+    min-height: 100vh;
+}
+
+/* Enhanced Header */
+.listings-header {
+    position: relative;
+    margin-bottom: var(--listings-space-xl);
+    padding: var(--listings-space-xl) 0;
+    background: linear-gradient(135deg, 
+        var(--listings-primary) 0%,
+        var(--listings-primary-dark) 100%);
+    color: white;
+}
+
+.listings-header__content {
+    position: relative;
+    z-index: 2;
+    max-width: var(--listings-max-width);
+    margin: 0 auto;
+    padding: 0 var(--listings-space-lg);
+}
+
+.listings-header__title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: var(--listings-space-md);
+}
+
+.listings-header__stats {
+    display: flex;
+    gap: var(--listings-space-lg);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Breadcrumb Navigation */
+.listings-breadcrumb {
+    background: var(--listings-surface);
+    border-bottom: 1px solid var(--listings-divider);
+    margin-bottom: var(--listings-space-xl);
+}
+
+.listings-breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: var(--listings-space-sm);
+    padding: var(--listings-space-md) 0;
+}
+
+/* Sidebar Filters */
+.listings-sidebar {
+    position: sticky;
+    top: calc(var(--listings-header-height) + var(--listings-space-lg));
+    height: calc(100vh - var(--listings-header-height) - var(--listings-space-xl) * 2);
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius-lg);
+    box-shadow: var(--listings-shadow-md);
+    overflow: hidden;
+}
+
+.listings-sidebar__header {
+    padding: var(--listings-space-lg);
+    border-bottom: 1px solid var(--listings-divider);
+    background: var(--listings-background);
+}
+
+.listings-sidebar__content {
+    padding: var(--listings-space-lg);
+    overflow-y: auto;
+}
+
+/* Search Components */
+.listings-search {
+    position: relative;
+    margin-bottom: var(--listings-space-lg);
+}
+
+.listings-search__input {
+    width: 100%;
+    padding: var(--listings-space-md) var(--listings-space-lg);
+    padding-left: calc(var(--listings-space-lg) * 2.5);
+    border: 2px solid var(--listings-divider);
+    border-radius: var(--listings-radius-md);
+    transition: var(--listings-transition);
+}
+
+.listings-search__input:focus {
+    border-color: var(--listings-primary);
+    box-shadow: 0 0 0 3px var(--listings-primary-light);
+}
+
+/* Filter Groups */
+.listings-filter {
+    margin-bottom: var(--listings-space-xl);
+}
+
+.listings-filter__title {
+    font-size: var(--listings-font-large);
+    font-weight: 600;
+    margin-bottom: var(--listings-space-md);
+    color: var(--listings-text);
+}
+
+/* Main Content Area */
+.listings-content {
+    flex: 1;
+}
+
+/* Toolbar */
+.listings-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--listings-space-lg);
+    padding: var(--listings-space-md);
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius-md);
+    box-shadow: var(--listings-shadow-sm);
+}
+
+/* Grid Layout */
+.listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--listings-space-lg);
+}
+
+/* Card Component */
+.listings-card {
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--listings-shadow-sm);
+    transition: var(--listings-transition);
+}
+
+.listings-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--listings-shadow-lg);
+}
+
+/* Loading States */
+.listings-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--listings-background);
+}
+
+.listings-skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.2) 50%,
+        transparent 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .listings {
+        padding: var(--listings-space-lg);
+    }
+}
+
+@media (max-width: 992px) {
+    .listings {
+        grid-template-columns: 1fr;
+    }
+    
+    .listings-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: 320px;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform var(--listings-transition);
+        z-index: 1000;
+    }
+    
+    .listings-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .listings-filter-toggle {
+        position: fixed;
+        right: var(--listings-space-lg);
+        bottom: var(--listings-space-lg);
+        background: var(--listings-primary);
+        color: white;
+        padding: var(--listings-space-md) var(--listings-space-lg);
+        border-radius: 50px;
+        box-shadow: var(--listings-shadow-lg);
+        z-index: 99;
+    }
+}
+
+@media (max-width: 768px) {
+    .listings {
+        padding: var(--listings-space-md);
+    }
+    
+    .listings-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .listings-toolbar {
+        flex-direction: column;
+        gap: var(--listings-space-md);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .listings {
+        display: block;
+    }
+    
+    .listings-sidebar,
+    .listings-toolbar {
+        display: none;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .listings-card,
+    .listings-sidebar,
+    .listings-search__input {
+        transition: none;
+    }
+}
+
+/* Main Layout - تصحيح الكلاسات حسب HTML */
+.masry-listings {
+    min-height: 100vh;
+    background: var(--masry-surface-light);
+    padding-bottom: var(--masry-spacing);
+}
+
+.masry-listings-content {
+    max-width: var(--masry-layout-width);
+    margin: 0 auto;
+    padding: 0 var(--masry-spacing);
+}
+
+.masry-grid {
+    display: grid;
+    grid-template-columns: var(--masry-sidebar-width) 1fr;
+    gap: var(--masry-grid-gap);
+}
+
+/* Header Section */
+.masry-listings-header {
+    background: linear-gradient(135deg, 
+        var(--masry-primary) 0%,
+        rgba(var(--masry-primary-rgb), 0.9) 100%
+    );
+    padding: calc(var(--masry-spacing) * 2) 0;
+    color: white;
+    margin-bottom: var(--masry-spacing);
+    position: relative;
+    overflow: hidden;
+}
+
+.masry-listings-header__content {
+    position: relative;
+    z-index: 2;
+}
+
+.masry-listings__title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--listings-font-primary);
+    font-weight: var(--listings-heading-weight);
+    color: var(--listings-surface);
+}
+
+/* Active Filters */
+.masry-active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.masry-active-filter {
+    background: rgba(255, 255, 255, 0.15);
+  
+    padding: 8px 16px;
+    border-radius: 30px;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    background: rgba(var(--listings-primary-rgb), 0.1);
+    color: var(--listings-primary);
+    border-radius: var(--listings-radius);
+    font-family: var(--listings-font-primary);
+}
+
+/* Sidebar */
+.masry-sidebar {
+    background: var(--masry-surface);
+    border-radius: var(--masry-radius);
+    box-shadow: var(--masry-shadow-sm);
+    position: sticky;
+    top: calc(var(--masry-header-height) + var(--masry-spacing));
+    height: calc(100vh - var(--masry-header-height) - var(--masry-spacing) * 2);
+    overflow: hidden;
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius);
+    border: 1px solid var(--listings-border);
+}
+
+.masry-sidebar__section {
+    padding: var(--masry-spacing);
+    border-bottom: 1px solid var(--masry-border);
+}
+
+.masry-sidebar__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+/* Search Components */
+.masry-search {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.masry-search__input {
+    width: 100%;
+    padding: 12px 16px 12px 48px;
+    border: 2px solid var(--masry-border);
+    border-radius: var(--masry-radius);
+    transition: var(--masry-transition);
+}
+
+.masry-search__icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--masry-primary);
+}
+
+/* Controls Bar */
+.masry-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--masry-surface);
+    padding: var(--masry-spacing);
+    border-radius: var(--masry-radius);
+    margin-bottom: var(--masry-spacing);
+    box-shadow: var(--masry-shadow-sm);
+}
+
+/* View Toggle */
+.masry-view-toggle {
+    display: flex;
+    gap: 8px;
+}
+
+.masry-view__btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--masry-border);
+    border-radius: 8px;
+    background: white;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--masry-transition);
+}
+
+.masry-view__btn.active {
+    background: var(--masry-primary);
+    color: white;
+    border-color: var(--masry-primary);
+}
+
+/* Listings Grid */
+.masry-listings-grid {
+    display: grid;
+    gap: var(--masry-grid-gap);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Load More Button */
+.masry-load-more {
+    text-align: center;
+    margin-top: var(--masry-spacing);
+}
+
+.masry-load-more__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: white;
+    border: 2px solid var(--masry-primary);
+    color: var(--masry-primary);
+    border-radius: var(--masry-radius);
+    cursor: pointer;
+    transition: var(--masry-transition);
+    background: var(--listings-surface);
+    color: var(--listings-primary);
+    border: 2px solid var(--listings-primary);
+    border-radius: var(--listings-radius);
+    font-family: var(--listings-font-primary);
+    transition: var(--listings-transition);
+}
+
+.masry-load-more__btn:hover {
+    background: var(--masry-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--masry-primary-rgb), 0.2);
+    background: var(--listings-primary);
+    color: var(--listings-surface);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .masry-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .masry-sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        max-width: 320px;
+        height: 100vh;
+        z-index: 1000;
+        border-radius: 0;
+        transition: left var(--masry-transition);
+    }
+    
+    .masry-sidebar.active {
+        left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .masry-listings-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .masry-controls {
+        flex-direction: column;
+        gap: var(--masry-spacing);
+    }
+}
+
+/* Additional Components */
+.masry-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--masry-transition);
+}
+
+.masry-checkbox:hover {
+    background: var(--masry-surface-light);
+}
+
+.masry-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: var(--masry-radius);
+    box-shadow: var(--masry-shadow-md);
+    margin-top: 4px;
+    z-index: 10;
+    display: none;
+}
+
+/* Skeleton Loading */
+.masry-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--masry-surface-light) 25%,
+        var(--masry-border) 37%,
+        var(--masry-surface-light) 63%
+    );
+    background-size: 400% 100%;
+    animation: masry-loading 1.4s ease infinite;
+}
+
+@keyframes masry-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Utilities */
+.masry-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* تحسين نظام الفلترة */
+.masry-filter-section {
+    padding: var(--masry-spacing);
+    border-bottom: 1px solid var(--masry-border);
+}
+
+/* تحسين فلتر الحالة */
+.masry-status-filter {
+    display: flex;
+    gap: 8px;
+    padding: 4px;
+    background: var(--masry-surface-light);
+    border-radius: 30px;
+    margin-top: 1rem;
+}
+
+.masry-status__btn {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-color);
+    background: transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--listings-font-primary);
+    border-radius: var(--listings-radius);
+    transition: var(--listings-transition);
+}
+
+.masry-status__btn:hover {
+    background: var(--masry-surface-light);
+}
+
+.masry-status__btn.active {
+    background: white;
+    color: var(--masry-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: var(--listings-primary);
+    color: var(--listings-surface);
+    border-color: var(--listings-primary);
+}
+
+/* تحسين زر الترتيب */
+.masry-sort {
+    position: relative;
+}
+
+.masry-sort__select {
+    appearance: none;
+    padding: 8px 36px 8px 16px;
+    border: 2px solid var(--masry-border);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.masry-sort__select:focus {
+    border-color: var(--masry-primary);
+    box-shadow: 0 0 0 3px rgba(var(--masry-primary-rgb), 0.1);
+}
+
+.masry-sort::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-color);
+}
+
+/* تحسين نظام التقييم بالنجوم */
+.masry-rating-filter {
+    padding: 16px;
+}
+
+.masry-rating-stars {
+    display: inline-flex;
+    gap: 4px;
+    direction: rtl; /* لجعل التقييم من اليمين لليسار */
+}
+
+.masry-rating-star {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.masry-rating-star::before {
+    content: '\f005'; /* نجمة ممتلئة */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+.masry-rating-star:hover,
+.masry-rating-star:hover ~ .masry-rating-star,
+.masry-rating-star.active,
+.masry-rating-star.active ~ .masry-rating-star {
+    color: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+/* تحسين عرض النتائج النشطة */
+.masry-active-filter {
+    background: rgba(var(--masry-primary-rgb), 0.1);
+    color: var(--masry-primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px;
+    transition: all 0.2s ease;
+}
+
+.masry-active-filter:hover {
+    background: rgba(var(--masry-primary-rgb), 0.15);
+    transform: translateY(-1px);
+}
+
+.masry-active-filter__remove {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: none;
+    background: rgba(var(--masry-primary-rgb), 0.2);
+    color: var(--masry-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.masry-active-filter__remove:hover {
+    background: var(--masry-primary);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* تحسين زر تحميل المزيد */
+.masry-load-more__btn {
+    background: white;
+    color: var(--masry-primary);
+    border: 2px solid var(--masry-primary);
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--listings-surface);
+    color: var(--listings-primary);
+    border: 2px solid var(--listings-primary);
+    border-radius: var(--listings-radius);
+    font-family: var(--listings-font-primary);
+    transition: var(--listings-transition);
+}
+
+.masry-load-more__btn:hover {
+    background: var(--masry-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--masry-primary-rgb), 0.2);
+    background: var(--listings-primary);
+    color: var (--listings-surface);
+}
+
+.masry-load-more__btn:active {
+    transform: translateY(0);
+}
+
+.masry-load-more__btn i {
+    transition: transform 0.3s ease;
+}
+
+.masry-load-more__btn:hover i {
+    transform: translateY(2px);
+}
+
+/* تحسين حالة عدم وجود نتائج */
+.masry-no-results {
+    text-align: center;
+    padding: 48px 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--masry-shadow-sm);
+}
+
+.masry-no-results__icon {
+    font-size: 48px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.masry-no-results__title {
+    font-size: 24px;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.masry-no-results__message {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+/* تحسينات إضافية للتفاعلية */
+.masry-checkbox input[type="checkbox"] {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--masry-border);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.masry-checkbox input[type="checkbox"]:checked {
+    background: var(--masry-primary);
+    border-color: var (--masry-primary);
+}
+
+.masry-checkbox input[type="checkbox"]:checked::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+}
+
+/* Error Styles */
+.masry-error-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: var(--masry-spacing);
+}
+
+.masry-error {
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: var(--masry-radius);
+    box-shadow: var(--masry-shadow-md);
+    max-width: 400px;
+    width: 100%;
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius);
+    font-family: var(--listings-font-primary);
+}
+
+.masry-error__icon {
+    font-size: 3rem;
+    color: var(--masry-primary);
+    margin-bottom: 1rem;
+}
+
+.masry-error__title {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.masry-error__message {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.masry-error__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--masry-primary);
+    color: white;
+    border: none;
+    border-radius: var(--masry-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--listings-primary);
+    color: var(--listings-surface);
+    border-radius: var(--listings-radius);
+    transition: var(--listings-transition);
+}
+
+.masry-error__button:hover {
+    background: var(--masry-primary-dark);
+    transform: translateY(-2px);
+    color: var(--masry-primary);
+    border: 1px solid var(--masry-primary);
+    background: var(--listings-surface);
+    color: var(--listings-primary);
+    border: 1px solid var(--listings-primary);
+}
+
+.masry-error__button i {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.masry-error__button:hover i {
+    transform: translateY(2px) rotate(100deg);
+}
+
+/* Header Updates */
+.masry-listings-header {
+   
+    top: 0;
+   
+  
+    background: linear-gradient(
+        135deg,
+        rgba(var(--masry-primary-rgb), 0.95) 0%,
+        rgba(var(--masry-primary-rgb), 0.85) 100%
+    );
+    background: linear-gradient(135deg, 
+        var(--listings-primary) 0%,
+        rgba(var(--listings-primary-rgb), 0.9) 100%
+    );
+    padding: calc(var(--listings-space) * 2);
+}
+
+/* Active Filters in Header */
+.masry-active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.masry-active-filter {
+    background: rgba(255, 255, 255, 0.15);
+  
+    padding: 8px 16px;
+    border-radius: 30px;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    background: rgba(var(--listings-primary-rgb), 0.1);
+    color: var(--listings-primary);
+    border-radius: var(--listings-radius);
+    font-family: var(--listings-font-primary);
+}
+
+.masry-active-filter__count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+
+/* Reset Button */
+.masry-reset-filters {
+    position: absolute;
+    right: var(--masry-spacing);
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+  
+    transition: all 0.3s ease;
+}
+
+/* Card Improvements */
+.masry-listing-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius);
+    border: 1px solid var(--listings-border);
+    overflow: hidden;
+    transition: var(--listings-transition);
+    font-family: var(--listings-font-primary);
+}
+
+.masry-listing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(var(--listings-primary-rgb), 0.12);
+}
+
+/* Mobile Drawer */
+.masry-filter-toggle {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .masry-filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        color: white;
+       
+    }
+
+    .masry-sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        max-width: 320px;
+        height: 100vh;
+        background: white;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .masry-sidebar.active {
+        left: 0;
+    }
+
+    body.no-scroll {
+        overflow: hidden;
+    }
+}
+
+/* Filter Section Headers */
+.masry-filter__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+    font-family: var(--listings-font-primary);
+    font-weight: var(--listings-heading-weight);
+    color: var(--listings-text);
+}
+
+.masry-filter__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--masry-primary);
+    transform-origin: left;
+    animation: slideIn 0.3s ease forwards;
+}
+
+/* Status Filter Redesign */
+.masry-status-filter {
+    display: flex;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.masry-status__btn {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid var(--masry-border);
+    border-radius: 12px;
+    background: white;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--listings-font-primary);
+    border-radius: var(--listings-radius);
+    transition: var(--listings-transition);
+}
+
+.masry-status__btn i {
+    font-size: 1.1rem;
+}
+
+.masry-status__btn:hover {
+    background: var(--masry-surface-light);
+    transform: translateY(-2px);
+}
+
+.masry-status__btn.active {
+    background: var(--masry-primary);
+    color: white;
+    border-color: var(--masry-primary);
+    box-shadow: 0 4px 12px rgba(var(--masry-primary-rgb), 0.2);
+    background: var(--listings-primary);
+    color: var(--listings-surface);
+    border-color: var(--listings-primary);
+}
+
+/* Listing Card Improvements */
+.masry-listing-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    background: var(--listings-surface);
+    border-radius: var(--listings-radius);
+    border: 1px solid var(--listings-border);
+    overflow: hidden;
+    transition: var(--listings-transition);
+    font-family: var(--listings-font-primary);
+}
+
+.masry-listing-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.masry-listing-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.masry-listing-card:hover .masry-listing-image img {
+    transform: scale(1.1);
+}
+
+.masry-listing-badges {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.masry-listing-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+    font-family: var(--listings-font-primary);
+    border-radius: calc(var(--listings-radius) / 2);
+}
+
+.masry-listing-badge.open {
+    background: rgba(46, 204, 113, 0.9);
+}
+
+.masry-listing-badge.closed {
+    background: rgba(231, 76, 60, 0.9);
+}
+
+/* Mobile Drawer Improvements */
+@media (max-width: 992px) {
+    .masry-filter-toggle {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 1000;
+        padding: 12px 24px;
+        background: var(--masry-primary);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        box-shadow: 0 4px 20px rgba(var(--masry-primary-rgb), 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: var(--listings-primary);
+        color: var(--listings-surface);
+        border-radius: var(--listings-radius);
+        font-family: var(--listings-font-primary);
+        box-shadow: 0 4px 12px rgba(var(--listings-primary-rgb), 0.2);
+    }
+
+    .masry-filter-toggle i {
+        font-size: 1.2rem;
+    }
+
+    .masry-filter-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(var(--masry-primary-rgb), 0.4);
+        box-shadow: 0 4px 12px rgba(var(--listings-primary-rgb), 0.2);
+    }
+
+    .masry-sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        max-width: 320px;
+        height: 100vh;
+        background: white;
+        z-index: 1001;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    .masry-sidebar.active {
+        left: 0;
+    }
+
+    .masry-sidebar__close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-color);
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .masry-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .masry-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Card Base Styles */
+.masry-listing-card {
+    background: var(--listings-background);
+    border-radius: var(--listings-card-radius);
+    border: 1px solid var(--listings-border);
+    overflow: hidden;
+    transition: var(--listings-transition);
+    font-family: var(--primary-font);
+    display: flex;
+    flex-direction: column;
+}
+
+.masry-listing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(var(--listings-primary-rgb), 0.12);
+}
+
+/* Image Container */
+.masry-listing-image {
+    position: relative;
+    padding-top: 66%; /* 3:2 Aspect Ratio */
+    background: var(--listings-border);
+    overflow: hidden;
+}
+
+.masry-listing-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.masry-listing-card:hover .masry-listing-image img {
+    transform: scale(1.1);
+}
+
+/* Badges */
+.masry-listing-badges {
+    position: absolute;
+    top: var(--listings-spacing-md);
+    right: var(--listings-spacing-md);
+    display: flex;
+    gap: var(--listings-spacing-sm);
+    z-index: 1;
+}
+
+.masry-badge {
+    padding: var(--listings-spacing-xs) var(--listings-spacing-md);
+    border-radius: var(--listings-badge-radius);
+    font-size: var(--listings-small-size);
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+}
+
+.masry-badge.open {
+    background: rgba(46, 204, 113, 0.9);
+    color: white;
+}
+
+.masry-badge.closed {
+    background: rgba(231, 76, 60, 0.9);
+    color: white;
+}
+
+.masry-badge.category {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--listings-primary);
+}
+
+/* Content Section */
+.masry-listing-content {
+    padding: var(--listings-spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--listings-spacing-md);
+    flex: 1;
+}
+
+/* Header */
+.masry-listing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--listings-spacing-md);
+}
+
+.masry-listing-title {
+    font-size: var(--listings-title-size);
+    font-weight: 600;
+    margin: 0;
+}
+
+.masry-listing-title a {
+    color: var(--listings-text);
+    text-decoration: none;
+}
+
+/* Rating */
+.masry-listing-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--listings-spacing-xs);
+}
+
+.masry-stars {
+    color: var(--listings-secondary);
+    display: flex;
+    gap: 2px;
+}
+
+.masry-review-count {
+    font-size: var(--listings-small-size);
+    color: var(--listings-muted);
+}
+
+/* Info Section */
+.masry-listing-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--listings-spacing-sm);
+}
+
+.masry-listing-location,
+.masry-listing-hours {
+    display: flex;
+    align-items: center;
+    gap: var(--listings-spacing-sm);
+    color: var(--listings-muted);
+    font-size: var(--listings-text-size);
+}
+
+/* Footer */
+.masry-listing-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--listings-spacing-md);
+    border-top: 1px solid var(--listings-border);
+}
+
+/* Amenities */
+.masry-amenities {
+    display: flex;
+    gap: var(--listings-spacing-sm);
+    flex-wrap: wrap;
+}
+
+.masry-amenity {
+    font-size: var(--listings-small-size);
+    color: var(--listings-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Button Styles */
+.masry-btn {
+    padding: var(--listings-spacing-sm) var(--listings-spacing-lg);
+    border-radius: var(--listings-badge-radius);
+    font-size: var(--listings-text-size);
+    font-weight: 500;
+    transition: var(--listings-transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--listings-spacing-sm);
+}
+
+.masry-btn--primary {
+    background: var(--listings-primary);
+    color: white;
+    border: none;
+}
+
+.masry-btn--primary:hover {
+    background: var(--listings-primary-dark);
+    transform: translateY(-2px);
+}
+
+/* List View Modifications */
+.masry-listing-card--list {
+    flex-direction: row;
+}
+
+.masry-listing-card--list .masry-listing-image {
+    width: 300px;
+    padding-top: 0;
+    flex-shrink: 0;
+}
+
+/* Breadcrumb Navigation - Fixed */
+.masry-breadcrumb-wrapper {
+    background: var(--listings-surface);
+    border-bottom: 1px solid var(--listings-border);
+    margin-top: var(--header-height); /* Add margin to clear fixed header */
+    position: relative;
+    z-index: 1; /* Ensure it's above regular content */
+}
+
+.masry-breadcrumb {
+    padding: var(--space-md) 0;
+}
+
+.masry-breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.masry-breadcrumb__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--listings-text-size);
+    color: var(--listings-muted);
+}
+
+.masry-breadcrumb__item:not(:last-child)::after {
+    content: '/';
+    color: var(--listings-border);
+    margin-left: var(--space-sm);
+}
+
+.masry-breadcrumb__link {
+    color: var(--listings-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: color var(--transition-fast);
+}
+
+.masry-breadcrumb__link:hover {
+    color: var(--listings-primary-dark);
+}
+
+.masry-breadcrumb__item--active {
+    color: var(--listings-text);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Adjust main content to accommodate breadcrumb */
+.masry-listings {
+    padding-top: 0; /* Remove top padding if it exists */
+}
+
+/* Enhanced Breadcrumb & Header System */
+.masry-breadcrumb-wrapper {
+    background: var(--listings-surface);
+    border-bottom: 1px solid var(--listings-border);
+    margin-top: var(--header-height);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.masry-breadcrumb-wrapper.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.masry-breadcrumb {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 1rem var(--container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Breadcrumb Path */
+.masry-breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.masry-breadcrumb__item {
+    display: flex;
+    align-items: center;
+    color: var(--listings-muted);
+    font-size: 0.875rem;
+}
+
+.masry-breadcrumb__item:not(:last-child)::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    margin-left: 0.75rem;
+    background: var(--listings-primary);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+.masry-breadcrumb__link {
+    color: var(--listings-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.masry-breadcrumb__link:hover {
+    background: var(--listings-primary-light);
+    transform: translateY(-1px);
+}
+
+.masry-breadcrumb__item--active {
+    font-weight: 500;
+    color: var(--listings-text);
+}
+
+/* Enhanced Header Design */
+.masry-listings-header {
+    position: relative;
+    background: linear-gradient(135deg, 
+        var(--listings-primary) 0%,
+        var(--listings-primary-dark) 100%
+    );
+    padding: 3.5rem 0 2.5rem;
+    color: white;
+    overflow: hidden;
+}
+
+/* Animated Background Pattern */
+.masry-listings-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(45deg, 
+            rgba(255, 255, 255, 0.05) 25%, 
+            transparent 25%, 
+            transparent 50%, 
+            rgba(255, 255, 255, 0.05) 50%, 
+            rgba(255, 255, 255, 0.05) 75%, 
+            transparent 75%, 
+            transparent
+        );
+    background-size: 4rem 4rem;
+    animation: backgroundMove 30s linear infinite;
+    opacity: 0.4;
+}
+
+.masry-listings-header__content {
+    position: relative;
+    z-index: 2;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Header Title & Count */
+.masry-listings__title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.masry-listings__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.masry-listings__icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    backdrop-filter: blur(4px);
+}
+
+/* Results Count */
+.masry-results-count {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeInDown 0.5s ease;
+}
+
+.masry-results-count__number {
+    font-weight: 700;
+    color: var(--listings-secondary);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes backgroundMove {
+    from { background-position: 0 0; }
+    to { background-position: 4rem 4rem; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .masry-listings-header {
+        padding: 2.5rem 0 2rem;
+    }
+
+    .masry-breadcrumb {
+        padding: 0.75rem var(--container-padding);
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .masry-results-count {
+        font-size: 0.8125rem;
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+/* Enhanced Breadcrumb & Header */
+.masry-breadcrumb-wrapper {
+    background: var(--listings-surface);
+    border-bottom: 1px solid var(--listings-border);
+    margin-top: var(--header-height);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.masry-breadcrumb {
+    padding: 1rem 0;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.masry-breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.875rem;
+}
+
+.masry-breadcrumb__item {
+    display: flex;
+    align-items: center;
+    color: var(--listings-muted);
+}
+
+.masry-breadcrumb__item:not(:last-child)::after {
+    content: '/';
+    margin: 0 0.75rem;
+    color: var(--listings-border);
+    font-weight: 300;
+}
+
+.masry-breadcrumb__link {
+    color: var(--listings-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+}
+
+.masry-breadcrumb__link:hover {
+    color: var(--listings-primary-dark);
+    background: var(--listings-primary-light);
+}
+
+.masry-breadcrumb__item--active {
+    font-weight: 500;
+    color: var(--listings-text);
+}
+
+/* Enhanced Header */
+.masry-listings-header {
+    position: relative;
+    background: linear-gradient(135deg, 
+        var(--listings-primary) 0%,
+        var(--listings-primary-dark) 100%
+    );
+    padding: 3rem 0;
+    color: white;
+    overflow: hidden;
+}
+
+/* Header Background Pattern */
+.masry-listings-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.05) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        rgba(255, 255, 255, 0.05) 75%, 
+        transparent 75%, 
+        transparent
+    );
+    background-size: 3rem 3rem;
+    animation: backgroundMove 30s linear infinite;
+    opacity: 0.4;
+}
+
+.masry-listings-header__content {
+    position: relative;
+    z-index: 2;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+.masry-listings__title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.masry-listings__title .category-icon {
+    font-size: 1.25em;
+    opacity: 0.9;
+}
+
+.total-count {
+    font-size: 0.5em;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+/* Header Animation */
+@keyframes backgroundMove {
+    from { background-position: 0 0; }
+    to { background-position: 3rem 3rem; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .masry-listings-header {
+        padding: 2rem 0;
+    }
+
+    .masry-breadcrumb {
+        padding: 0.75rem var(--container-padding);
+    }
+
+    .masry-breadcrumb__list {
+        font-size: 0.8125rem;
+    }
+}
+

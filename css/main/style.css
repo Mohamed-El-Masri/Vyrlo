@@ -73,3 +73,55 @@ footer {
     margin: 0 auto;
     padding: 0 15px;
 }
+
+/* Error Page Styles */
+.error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 95vh;
+  background-color: var(--background-color);
+}
+
+.error-content {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: bold;
+  color: var(--primary-color); /* Changed to primary color */
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-title {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: var(--text-color); /* Changed to text color */
+  margin-bottom: 2rem;
+}
+.error-btn {
+  padding: var(--button-padding);
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  background-color: var(--background-color); /* Changed to background color */
+  color: var(--primary-color); /* Changed to primary color */
+  border: 2px solid var(--primary-color); /* Added border color */
+  transition: all var(--transition-duration) var(--transition-ease);
+}
+
+.error-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-color); /* Changed hover background color */
+  color: var(--background-color); /* Changed hover text color */
+  border: 2px solid var(--primary-color); /* Changed hover border color to match background color */
+}

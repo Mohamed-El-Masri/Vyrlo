@@ -53,7 +53,7 @@
 
 .listing-badge.category {
     background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(5px);
+   
 }
 
 /* Enhanced Status Badge */
@@ -94,8 +94,9 @@
 
 /* Gallery */
 .listing-gallery {
-    border-radius: 12px;
+    position: relative;
     overflow: hidden;
+    border-radius: 12px;
     margin-bottom: 2rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -104,6 +105,11 @@
     width: 100%;
     height: 400px;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.listing-gallery:hover .listing-gallery__main {
+    transform: scale(1.05);
 }
 
 /* Sections */
@@ -269,8 +275,8 @@
 
 .listing-error i {
     font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+   
+    margin-bottom: auto;
 }
 
 /* Owner Name */
@@ -1122,3 +1128,283 @@
 
 /* Remove old contact styles */
 /* ... remove any conflicting contact-related styles ... */
+
+/* إضافة تأثيرات انتقالية */
+.card-transition {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card-clicked {
+    transform: scale(0.98);
+    opacity: 0.8;
+}
+
+/* تحسين حالة التحميل */
+.listing-loading {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-content {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* تحسين عرض الصور */
+.listing-gallery {
+    position: relative;
+    overflow: hidden;
+}
+
+.listing-gallery__main {
+    transition: transform 0.3s ease;
+}
+
+.listing-gallery:hover .listing-gallery__main {
+    transform: scale(1.05);
+}
+
+/* Reviews Section Styles */
+.reviews-section {
+    margin-top: 2rem;
+}
+
+.ratings-overview {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--neutral-50);
+    border-radius: 12px;
+}
+
+.total-rating {
+    text-align: center;
+}
+
+.rating-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.rating-categories {
+    display: grid;
+    gap: 1rem;
+}
+
+.rating-category {
+    display: grid;
+    grid-template-columns: 120px 1fr 50px;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rating-bar {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.reviews-list {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.review-item {
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.review-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.reviewer-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.review-date {
+    font-size: 0.875rem;
+    color: var(--muted-text-color);
+}
+
+.review-text {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Error Page Styles */
+.listing-error {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    /* background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); */
+}
+
+.error-content {
+    text-align: center;
+    padding: 3.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    max-width: 500px;
+    width: 100%;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.error-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.error-content i {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.error-content h3 {
+    font-size: 1.75rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.error-content p {
+    color: var(--muted-text-color);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+}
+
+/* Refresh Button */
+.btn-refresh {
+    padding: 0.875rem 1.75rem;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-refresh:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-refresh i {
+    font-size: 1.25rem;
+    margin: 0;
+    transition: transform 0.4s ease;
+}
+
+.btn-refresh:hover i {
+    transform: rotate(180deg);
+    color:white;
+}
+
+/* Home Button */
+.btn-home {
+    padding: 0.875rem 1.75rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-home:hover {
+    background: var(--primary-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(var(--primary-color-rgb), 0.3);
+    border: 1px solid var(--primary-color);
+    color:var(--primary-color);
+}
+
+.btn-home i {
+    font-size: 1.75rem;
+   color: white;
+    transition: transform 0.4s ease;
+    margin: auto;
+}
+
+.btn-home:hover i {
+    transform: translateY(-2px);
+     color:var(--primary-color);
+}
+
+
+/* تحسين التجاوب */
+@media (max-width: 480px) {
+    .error-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .error-content {
+        padding: 2.5rem;
+    }
+
+    .btn-refresh, .btn-home {
+        width: 100%;
+        justify-content: center;
+    }
+}

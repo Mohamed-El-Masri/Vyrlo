@@ -3,7 +3,7 @@
     background-color: var(--navbar-bg-color); 
     position: fixed;
     width: 100%;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .masry-nav-item {
@@ -42,7 +42,7 @@
     padding: 15px;
     margin-top: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
+   
 }
 
 .masry-dropdown-menu.show {
@@ -137,6 +137,7 @@
     height: fit-content;
     columns: 3;
     overflow-x: hidden;
+    z-index: 1005;
 }
 
 .masry-dropdown-item {
@@ -278,7 +279,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    backdrop-filter: blur(5px);
+   
     border: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -511,6 +512,54 @@
         text-align: center;
         justify-content: center;
     }
+}
+
+/* Active Link Style */
+.masry-header-active {
+    color: var(--primary-color) !important;
+    font-weight:900;
+    position: relative;
+
+}
+
+.masry-header-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+/* تحسين مظهر اللوجو عند النقر */
+.masry-brand {
+    transition: transform 0.3s ease;
+}
+
+.masry-brand:hover {
+    transform: scale(1.05);
+}
+
+.masry-footer__brand a {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.masry-footer__brand a:hover {
+    transform: scale(1.05);
 }
 
 

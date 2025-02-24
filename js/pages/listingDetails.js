@@ -2,16 +2,23 @@ class ListingDetails {
     constructor() {
         this.config = {
             api: {
-                baseUrl: 'https://virlo.vercel.app/listing'
+                baseUrl: 'https://virlo.vercel.app/listing',
+                reviewsUrl: 'https://virlo.vercel.app/api/reviews'
             },
             defaultImages: {
                 listing: '../images/defaults/default-listing.png'
-            }
+            },
+            reviewsPerPage: 5
         };
 
         this.state = {
             listing: null,
-            owner: null
+            owner: null,
+            reviews: {
+                items: [],
+                averages: null,
+                pagination: null
+            }
         };
 
         this.init();
@@ -21,20 +28,30 @@ class ListingDetails {
         this.container = document.querySelector('.listing-details');
         if (!this.container) return;
 
+        this.showInitialLoading();
+
         const id = this.getListingId();
         if (!id) {
             this.showError('Listing ID not found');
             return;
         }
 
-        this.showLoading();
         try {
+            const cachedData = this.checkCachedData(id);
+            if (cachedData) {
+                this.state.listing = cachedData;
+                this.renderDetails(true);
+            }
+
             const listingData = await this.fetchListingDetails(id);
             this.state.listing = listingData;
-            this.renderDetails();
+            
+            if (!cachedData || JSON.stringify(cachedData) !== JSON.stringify(listingData)) {
+                this.renderDetails();
+            }
+
         } catch (error) {
-            console.error('Error in initialization:', error);
-            this.showError('Failed to load listing details');
+            this.handleError(error);
         }
     }
 
@@ -75,7 +92,28 @@ class ListingDetails {
         }
     }
 
-    renderDetails() {
+    async fetchReviews(listingId, page = 1) {
+        try {
+            const response = await fetch(
+                `${this.config.api.reviewsUrl}/${listingId}?page=${page}&limit=${this.config.reviewsPerPage}`
+            );
+            if (!response.ok) throw new Error('Failed to fetch reviews');
+            
+            const data = await response.json();
+            this.state.reviews = {
+                items: data.reviews,
+                averages: data.averages,
+                pagination: data.pagination
+            };
+            
+            return data;
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+            return null;
+        }
+    }
+
+    renderDetails(useCached = false) {
         const { listing } = this.state;
         
         this.container.innerHTML = `
@@ -370,13 +408,13 @@ class ListingDetails {
         return today === day;
     }
 
-    showLoading() {
+    showInitialLoading() {
         this.container.innerHTML = `
             <div class="listing-loading">
                 <div class="loading-content">
                     <div class="loading-spinner"></div>
-                    <h3>Loading Details</h3>
-                    <p>Please wait while we fetch the listing information...</p>
+                    <h3>Loading Listing Details</h3>
+                    <p>Please wait while we fetch the information...</p>
                 </div>
             </div>
         `;
@@ -388,12 +426,115 @@ class ListingDetails {
                 <div class="error-content">
                     <i class="bi bi-exclamation-circle"></i>
                     <h3>Oops! Something went wrong</h3>
-                    <p>${message}</p>
-                    <a href="/" class="btn-primary">
-                        <i class="bi bi-house"></i>
-                        Return Home
-                    </a>
+                    <p>The page you're looking for could not be found.</p>
+                    <div class="error-actions">
+                        <button onclick="window.location.reload()" class="btn-refresh">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            Refresh Page
+                        </button>
+                        <a href="../index.html" class="btn-home">
+                            <i class="bi bi-house"></i>
+                            Return Home
+                        </a>
+                    </div>
                 </div>
+            </div>
+        `;
+    }
+
+    checkCachedData(id) {
+        const cached = sessionStorage.getItem('lastViewedListing');
+        if (cached) {
+            const { id: cachedId, data, timestamp } = JSON.parse(cached);
+            if (cachedId === id && Date.now() - timestamp < 5 * 60 * 1000) {
+                return data;
+            }
+        }
+        return null;
+    }
+
+    handleError(error) {
+        console.error('Error in initialization:', error);
+        this.showError('Failed to load listing details');
+    }
+
+    renderReviews() {
+        const { averages, items } = this.state.reviews;
+        if (!averages) return '';
+
+        return `
+            <section class="listing-section reviews-section">
+                <h2 class="listing-section__title">
+                    <i class="bi bi-star"></i>
+                    Reviews & Ratings
+                </h2>
+                
+                <div class="ratings-overview">
+                    <div class="total-rating">
+                        <span class="rating-number">${averages.totalAverage.toFixed(1)}</span>
+                        <div class="rating-stars">
+                            ${this.createRatingStars(averages.totalAverage)}
+                        </div>
+                        <span class="reviews-count">${this.state.reviews.pagination.totalReviews} reviews</span>
+                    </div>
+                    
+                    <div class="rating-categories">
+                        <div class="rating-category">
+                            <span>Service</span>
+                            <div class="rating-bar">
+                                <div class="bar-fill" style="width: ${(averages.serviceAvg/5)*100}%"></div>
+                            </div>
+                            <span>${averages.serviceAvg.toFixed(1)}</span>
+                        </div>
+                        <div class="rating-category">
+                            <span>Value for Money</span>
+                            <div class="rating-bar">
+                                <div class="bar-fill" style="width: ${(averages.moneyAvg/5)*100}%"></div>
+                            </div>
+                            <span>${averages.moneyAvg.toFixed(1)}</span>
+                        </div>
+                        <div class="rating-category">
+                            <span>Cleanliness</span>
+                            <div class="rating-bar">
+                                <div class="bar-fill" style="width: ${(averages.cleanlinessAvg/5)*100}%"></div>
+                            </div>
+                            <span>${averages.cleanlinessAvg.toFixed(1)}</span>
+                        </div>
+                        <div class="rating-category">
+                            <span>Location</span>
+                            <div class="rating-bar">
+                                <div class="bar-fill" style="width: ${(averages.locationAvg/5)*100}%"></div>
+                            </div>
+                            <span>${averages.locationAvg.toFixed(1)}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-list">
+                    ${items.map(review => this.renderReviewItem(review)).join('')}
+                </div>
+                
+                ${this.renderPagination()}
+            </section>
+        `;
+    }
+
+    renderReviewItem(review) {
+        return `
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>${review.reviewerName}</h4>
+                        <span class="review-date">${new Date(review.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <div class="review-rating">
+                        ${this.createRatingStars(
+                            (review.serviceRating + review.moneyRating + 
+                             review.cleanlinessRating + review.locationRating) / 4
+                        )}
+                    </div>
+                </div>
+                <p class="review-text">${review.reviewText}</p>
             </div>
         `;
     }

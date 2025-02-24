@@ -1,0 +1,8 @@
+/* Core imports */
+@import './core/_variables.css';
+@import './core/_reset.css';
+@import './core/_utilities.css';
+
+/* Component imports */
+// ...existing imports...
+@import './components/_autocomplete.css';

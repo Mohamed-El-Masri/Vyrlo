@@ -104,248 +104,229 @@ class CustomSelect {
 
 class SearchHandler {
     constructor() {
-        // تأكد من تهيئة كل العناصر
-        this.initializeElements();
-        
-        if (!this.validateElements()) {
-            console.error('Some required elements are missing from the DOM');
-            return;
-        }
+        this.config = {
+            api: {
+                baseUrl: 'https://virlo.vercel.app/listing',
+                categoriesUrl: 'https://virlo.vercel.app/categories'
+            },
+            debounceTime: 300,
+            minSearchLength: 2
+        };
+
+        this.elements = {
+            keywordInput: document.querySelector('.masry-search__input[data-search-type="keyword"]'),
+            locationInput: document.querySelector('.masry-search__input[data-search-type="location"]'),
+            categoryInput: document.querySelector('.masry-search__input[data-search-type="category"]'),
+            searchButton: document.querySelector('.masry-search__button'),
+            dropdowns: document.querySelectorAll('.masry-select__dropdown')
+        };
+
+        this.state = {
+            keyword: '',
+            location: '',
+            category: '',
+            isLoading: false,
+            suggestions: {
+                keywords: new Set(),
+                locations: new Set(),
+                categories: []
+            }
+        };
 
         this.init();
     }
 
-    initializeElements() {
-        this.fields = {
-            keyword: this.createFieldObject(1),
-            location: this.createFieldObject(2),
-            category: this.createFieldObject(3)
-        };
-
-        this.searchButton = document.querySelector('.masry-search__button');
-        this.datasource = {
-            locations: new Set(),
-            keywords: new Set(),
-            categories: []
-        };
-    }
-
-    createFieldObject(index) {
-        const field = document.querySelector(`.masry-search__field:nth-child(${index})`);
-        return field ? {
-            container: field,
-            input: field.querySelector('.masry-search__input'),
-            dropdown: field.querySelector('.masry-select__dropdown'),
-            searchInput: field.querySelector('.masry-select__search input'),
-            options: field.querySelector('.masry-select__options'),
-            activeField: field
-        } : null;
-    }
-
-    validateElements() {
-        // التحقق من وجود جميع العناصر المطلوبة
-        return Object.values(this.fields).every(field => 
-            field && field.input && field.dropdown && field.options
-        ) && this.searchButton;
-    }
-
     async init() {
         try {
-            await this.fetchInitialData();
-            this.setupEventListeners();
-            this.cacheResults();
+            // تهيئة العناصر أولاً
+            this.bindEvents();
+            
+            // ثم تحميل البيانات
+            await this.loadInitialData();
+            
+            // وأخيراً استعادة البحث السابق
+            this.restoreLastSearch();
         } catch (error) {
             console.error('Initialization error:', error);
+            this.showError('Failed to initialize search');
         }
     }
 
-    async fetchInitialData() {
+    async loadInitialData() {
         try {
-            const [listingsResponse, categoriesInstance] = await Promise.all([
-                fetch('https://virlo.vercel.app/listing/'),
-                CategoryManager.getInstance()
+            const [listingsResponse, categoriesResponse] = await Promise.all([
+                fetch(`${this.config.api.baseUrl}/?lastValue=1`),
+                fetch(this.config.api.categoriesUrl)
             ]);
 
-            const listingsData = await listingsResponse.json();
-            
-            // تحليل البيانات
-            listingsData.listings.forEach(listing => {
-                // تخزين المواقع
-                if (listing.location) {
-                    this.datasource.locations.add(listing.location);
-                }
-                
-                // تحليل الكلمات المفتاحية من العنوان والوصف
-                if (listing.listingName) {
-                    listing.listingName.split(/\s+/).forEach(word => {
-                        if (word.length > 2) this.datasource.keywords.add(word);
-                    });
-                }
-                if (listing.description) {
-                    listing.description.split(/\s+/).forEach(word => {
-                        if (word.length > 2) this.datasource.keywords.add(word);
-                    });
-                }
-            });
+            const [listingsData, categoriesData] = await Promise.all([
+                listingsResponse.json(),
+                categoriesResponse.json()
+            ]);
 
-            // الحصول على التصنيفات
-            this.datasource.categories = categoriesInstance.getCategories();
+            this.processListingsData(listingsData);
+            this.state.suggestions.categories = categoriesData;
 
-            // تحديث القوائم المنسدلة
             this.updateAllDropdowns();
         } catch (error) {
-            console.error('Error fetching initial data:', error);
+            console.error('Data loading error:', error);
+            throw new Error('Failed to load initial data');
         }
     }
 
-    setupEventListeners() {
-        Object.entries(this.fields).forEach(([fieldName, elements]) => {
-            if (!elements) return;
+    updateAllDropdowns() {
+        this.updateDropdown('keyword', Array.from(this.state.suggestions.keywords));
+        this.updateDropdown('location', Array.from(this.state.suggestions.locations));
+        this.updateDropdown('category', this.state.suggestions.categories);
+    }
 
-            elements.input?.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.toggleDropdown(fieldName);
-            });
-
-            elements.searchInput?.addEventListener('input', (e) => {
-                this.performSearch(fieldName, e.target.value);
-            });
-
-            elements.options?.addEventListener('click', (e) => {
-                const option = e.target.closest('.masry-select__option');
-                if (option) {
-                    this.selectOption(fieldName, option);
-                }
-            });
+    processListingsData(data) {
+        if (!data.listings) return;
+        
+        data.listings.forEach(listing => {
+            if (listing.location) {
+                this.state.suggestions.locations.add(listing.location);
+            }
+            if (listing.listingName) {
+                listing.listingName.split(/\s+/).forEach(word => {
+                    if (word.length > this.config.minSearchLength) {
+                        this.state.suggestions.keywords.add(word);
+                    }
+                });
+            }
         });
+    }
 
-        // إغلاق القوائم عند النقر خارجها
+    bindEvents() {
+        if (!this.elements.keywordInput || 
+            !this.elements.locationInput || 
+            !this.elements.categoryInput) {
+            console.warn('Some search elements are missing');
+            return;
+        }
+
+        // Bind search inputs
+        this.elements.keywordInput.addEventListener('input', 
+            this.debounce(e => this.handleInput(e, 'keyword'), this.config.debounceTime)
+        );
+        this.elements.locationInput.addEventListener('input',
+            this.debounce(e => this.handleInput(e, 'location'), this.config.debounceTime)
+        );
+        this.elements.categoryInput.addEventListener('input',
+            this.debounce(e => this.handleInput(e, 'category'), this.config.debounceTime)
+        );
+
+        // Bind search button
+        if (this.elements.searchButton) {
+            this.elements.searchButton.addEventListener('click', () => this.handleSearch());
+        }
+
+        // Close dropdowns on outside click
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.masry-search__field')) {
                 this.closeAllDropdowns();
             }
         });
-
-        // معالجة البحث
-        this.searchButton?.addEventListener('click', () => this.handleSearch());
     }
 
-    performSearch(fieldName, query) {
-        query = query.toLowerCase().trim();
-        const field = this.fields[fieldName];
-        let filteredItems;
-
-        switch (fieldName) {
-            case 'category':
-                filteredItems = this.datasource.categories.filter(cat => 
-                    cat.categoryName.toLowerCase().includes(query)
-                );
-                break;
-            case 'location':
-                filteredItems = Array.from(this.datasource.locations).filter(loc => 
-                    loc.toLowerCase().includes(query)
-                );
-                break;
-            case 'keyword':
-                filteredItems = Array.from(this.datasource.keywords).filter(key => 
-                    key.toLowerCase().includes(query)
-                );
-                break;
+    handleInput(event, type) {
+        if (!event || !event.target) {
+            console.warn(`Invalid event for ${type}`);
+            return;
         }
 
-        this.renderFilteredOptions(fieldName, filteredItems);
-        this.showDropdown(fieldName);
-    }
+        const value = event.target.value.trim();
+        this.state[type] = value;
 
-    renderFilteredOptions(fieldName, items) {
-        const field = this.fields[fieldName];
-        let html = '';
-
-        if (items.length === 0) {
-            html = '<div class="masry-select__no-results">No results found</div>';
-        } else {
-            html = items.map(item => {
-                if (fieldName === 'category') {
-                    const icon = CategoryManager.getInstance().getCategoryIcon(item);
-                    return `
-                        <div class="masry-select__option" data-value="${item._id}">
-                            <i class="fas fa-${icon}"></i>
-                            <span>${item.categoryName}</span>
-                        </div>
-                    `;
-                } else {
-                    const icon = fieldName === 'location' ? 'bi-geo-alt' : 'bi-search';
-                    return `
-                        <div class="masry-select__option">
-                            <i class="bi ${icon}"></i>
-                            <span>${item}</span>
-                        </div>
-                    `;
-                }
-            }).join('');
+        if (value.length < this.config.minSearchLength) {
+            this.closeDropdown(type);
+            return;
         }
 
-        field.options.innerHTML = html;
+        this.showDropdown(type);
+        this.filterSuggestions(type, value);
     }
 
-    selectOption(fieldName, option) {
-        const field = this.fields[fieldName];
-        const value = option.textContent.trim();
-        
-        field.input.value = value;
-        field.activeField.classList.add('has-value');
-        this.hideDropdown(fieldName);
+    filterSuggestions(type, value) {
+        const suggestions = Array.from(this.state.suggestions[type + 's'] || [])
+            .filter(item => {
+                const searchValue = type === 'category' ? item.categoryName : item;
+                return searchValue.toLowerCase().includes(value.toLowerCase());
+            });
 
-        // تحديث حالة البحث
-        this.updateSearchState();
+        this.updateDropdown(type, suggestions);
     }
 
-    toggleDropdown(fieldName) {
-        const isVisible = this.fields[fieldName].dropdown.style.display === 'block';
-        
-        this.closeAllDropdowns();
-        
-        if (!isVisible) {
-            this.showDropdown(fieldName);
+    updateDropdown(type, suggestions) {
+        const dropdown = document.querySelector(`.masry-search__field[data-type="${type}"] .masry-select__options`);
+        if (!dropdown) return;
+
+        dropdown.innerHTML = suggestions.map(item => {
+            const value = type === 'category' ? item.categoryName : item;
+            const icon = this.getSuggestionIcon(type);
+            return `
+                <div class="masry-select__option" data-value="${type === 'category' ? item._id : value}">
+                    <i class="${icon}"></i>
+                    <span>${value}</span>
+                </div>
+            `;
+        }).join('');
+
+        dropdown.querySelectorAll('.masry-select__option').forEach(option => {
+            option.addEventListener('click', () => this.selectOption(type, option));
+        });
+    }
+
+    getSuggestionIcon(type) {
+        const icons = {
+            keyword: 'fa-solid fa-search',
+            location: 'fa-solid fa-location-dot',
+            category: 'fa-solid fa-layer-group'
+        };
+        return icons[type] || 'fa-solid fa-circle';
+    }
+
+    selectOption(type, option) {
+        const value = option.querySelector('span').textContent;
+        const input = this.elements[`${type}Input`];
+        if (input) {
+            input.value = value;
+            this.state[type] = type === 'category' ? option.dataset.value : value;
+            this.hideDropdown(type);
         }
     }
 
-    showDropdown(fieldName) {
-        const field = this.fields[fieldName];
-        field.dropdown.style.display = 'block';
-        field.activeField.classList.add('active');
-        field.searchInput?.focus();
+    showDropdown(type) {
+        const field = this.elements[`${type}Input`]?.closest('.masry-search__field');
+        if (field) {
+            field.dropdown.style.display = 'block';
+            field.activeField.classList.add('active');
+            field.searchInput?.focus();
+        }
     }
 
-    hideDropdown(fieldName) {
-        const field = this.fields[fieldName];
-        field.dropdown.style.display = 'none';
-        field.activeField.classList.remove('active');
-        if (field.searchInput) {
-            field.searchInput.value = '';
+    hideDropdown(type) {
+        const field = this.elements[`${type}Input`]?.closest('.masry-search__field');
+        if (field) {
+            field.dropdown.style.display = 'none';
+            field.activeField.classList.remove('active');
+            if (field.searchInput) {
+                field.searchInput.value = '';
+            }
         }
     }
 
     closeAllDropdowns() {
-        Object.keys(this.fields).forEach(fieldName => {
-            this.hideDropdown(fieldName);
-        });
-    }
-
-    updateAllDropdowns() {
-        Object.keys(this.fields).forEach(fieldName => {
-            const items = fieldName === 'category' ? 
-                this.datasource.categories :
-                Array.from(this.datasource[fieldName + 's']);
-            this.renderFilteredOptions(fieldName, items);
+        Object.keys(this.elements).forEach(type => {
+            this.hideDropdown(type);
         });
     }
 
     handleSearch() {
         const searchParams = {
-            keyword: this.fields.keyword.input.value,
-            location: this.fields.location.input.value,
-            category: this.fields.category.input.value
+            keyword: this.state.keyword,
+            location: this.state.location,
+            category: this.state.category
         };
 
         // الانتقال إلى صفحة alllistings مع تمرير المعلمات لاستخدامها في التصفية
@@ -354,17 +335,228 @@ class SearchHandler {
         window.location.href = `/pages/allListings.html?${queryString}`;
     }
 
-    // حفظ النتائج في ذاكرة التخزين المؤقت
-    cacheResults() {
-        localStorage.setItem('searchData', JSON.stringify({
-            locations: Array.from(this.datasource.locations),
-            keywords: Array.from(this.datasource.keywords),
+    showLoadingIndicator(type) {
+        const field = this.elements[`${type}Input`]?.closest('.masry-search__field');
+        if (field) {
+            field.dropdown.classList.add('loading');
+        }
+    }
+
+    hideLoadingIndicator(type) {
+        const field = this.elements[`${type}Input`]?.closest('.masry-search__field');
+        if (field) {
+            field.dropdown.classList.remove('loading');
+        }
+    }
+
+    showError(message) {
+        const errorElement = document.createElement('div');
+        errorElement.className = 'masry-select__error';
+        errorElement.textContent = message;
+        
+        const field = this.elements.keywordInput?.closest('.masry-search__field') ||
+                     this.elements.locationInput?.closest('.masry-search__field') ||
+                     this.elements.categoryInput?.closest('.masry-search__field');
+        
+        if (field) {
+            field.appendChild(errorElement);
+        }
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    restoreLastSearch() {
+        try {
+            const savedSearch = localStorage.getItem('lastSearch');
+            if (!savedSearch) return;
+
+            const searchData = JSON.parse(savedSearch);
+            
+            // التحقق من صلاحية البيانات المخزنة
+            if (Date.now() - searchData.timestamp > 24 * 60 * 60 * 1000) {
+                localStorage.removeItem('lastSearch');
+                return;
+            }
+
+            // تحديث حقول البحث إذا كانت موجودة
+            if (this.elements.keywordInput && searchData.keyword) {
+                this.elements.keywordInput.value = searchData.keyword;
+                this.state.keyword = searchData.keyword;
+            }
+
+            if (this.elements.locationInput && searchData.location) {
+                this.elements.locationInput.value = searchData.location;
+                this.state.location = searchData.location;
+            }
+
+            if (this.elements.categoryInput && searchData.category) {
+                this.elements.categoryInput.value = searchData.category;
+                this.state.category = searchData.category;
+            }
+        } catch (error) {
+            console.warn('Failed to restore last search:', error);
+        }
+    }
+
+    // إضافة وظيفة حفظ البحث الأخير
+    saveLastSearch() {
+        const searchData = {
+            keyword: this.state.keyword,
+            location: this.state.location,
+            category: this.state.category,
             timestamp: Date.now()
-        }));
+        };
+        localStorage.setItem('lastSearch', JSON.stringify(searchData));
+    }
+
+    // إضافة وظيفة البحث المتقدم
+    async performAdvancedSearch() {
+        try {
+            this.showLoadingState();
+            
+            const params = new URLSearchParams({
+                lastValue: 1,
+                name: this.state.keyword,
+                location: this.state.location,
+                categoryId: this.state.category
+            });
+
+            const response = await fetch(`${this.config.api.baseUrl}/?${params}`);
+            const data = await response.json();
+
+            this.saveLastSearch();
+            return data;
+        } catch (error) {
+            console.error('Search error:', error);
+            this.showError('Failed to perform search');
+            return null;
+        } finally {
+            this.hideLoadingState();
+        }
+    }
+
+    // تحسين عرض حالة التحميل
+    showLoadingState() {
+        this.state.isLoading = true;
+        this.elements.searchButton.classList.add('loading');
+        this.elements.searchButton.disabled = true;
+    }
+
+    hideLoadingState() {
+        this.state.isLoading = false;
+        this.elements.searchButton.classList.remove('loading');
+        this.elements.searchButton.disabled = false;
+    }
+
+    // تحسين معالجة الأخطاء
+    handleError(error, type = 'general') {
+        console.error(`${type} error:`, error);
+        
+        const errorMessages = {
+            network: 'Network connection error. Please check your internet connection.',
+            api: 'Server error. Please try again later.',
+            validation: 'Please check your input and try again.',
+            general: 'An error occurred. Please try again.'
+        };
+
+        this.showError(errorMessages[type] || errorMessages.general);
+    }
+
+    // إضافة وظيفة التحقق من المدخلات
+    validateInputs() {
+        const validations = {
+            keyword: this.state.keyword.length >= this.config.minSearchLength,
+            location: this.state.location.length >= this.config.minSearchLength,
+            category: this.state.category.length > 0
+        };
+
+        return Object.values(validations).some(isValid => isValid);
+    }
+
+    // تحسين معالجة البحث
+    async handleSearch() {
+        if (!this.validateInputs()) {
+            this.showError('Please enter at least one search criteria');
+            return;
+        }
+
+        try {
+            const searchResults = await this.performAdvancedSearch();
+            if (searchResults) {
+                // تحويل النتائج إلى معلمات URL
+                const queryParams = new URLSearchParams({
+                    keyword: this.state.keyword,
+                    location: this.state.location,
+                    category: this.state.category,
+                    results: JSON.stringify(searchResults)
+                });
+
+                // الانتقال إلى صفحة النتائج
+                window.location.href = `/pages/allListings.html?${queryParams.toString()}`;
+            }
+        } catch (error) {
+            this.handleError(error, 'api');
+        }
+    }
+
+    // إضافة وظيفة الاقتراحات الذكية
+    updateSmartSuggestions(type, value) {
+        if (value.length < this.config.minSearchLength) return;
+
+        const recentSearches = this.getRecentSearches();
+        const suggestions = new Set([
+            ...Array.from(this.state.suggestions[type + 's'] || []),
+            ...recentSearches[type] || []
+        ]);
+
+        this.updateDropdown(type, Array.from(suggestions));
+    }
+
+    // إضافة وظيفة استرجاع البحث السابق
+    getRecentSearches() {
+        try {
+            const searches = localStorage.getItem('recentSearches');
+            return searches ? JSON.parse(searches) : {};
+        } catch {
+            return {};
+        }
     }
 }
 
 // تهيئة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
-    new SearchHandler();
+    const searchHandler = new SearchHandler();
+    
+    // إضافة مستمع للتغييرات في الموقع
+    if ('geolocation' in navigator) {
+        const locationInput = document.querySelector('.masry-search__input[placeholder="Select location"]');
+        
+        document.querySelector('.masry-search__location-detect')?.addEventListener('click', () => {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    // تحويل الإحداثيات إلى عنوان باستخدام Reverse Geocoding
+                    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (locationInput && data.address) {
+                                locationInput.value = data.address.city || data.address.town || data.address.village || '';
+                                searchHandler.handleInput({ target: locationInput }, 'location');
+                            }
+                        })
+                        .catch(error => searchHandler.handleError(error, 'network'));
+                },
+                error => searchHandler.handleError(error, 'location')
+            );
+        });
+    }
 });

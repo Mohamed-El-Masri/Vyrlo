@@ -21,7 +21,7 @@
         rgba(25, 54, 95, 0.92) 0%,
         rgba(25, 54, 95, 0.85) 100%
     );
-    backdrop-filter: blur(5px);
+    
     width: 100%;
     height: 100%;
 }
@@ -54,7 +54,7 @@
 /* Search Styles */
 .masry-search {
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
+   
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     padding: 15px;
@@ -80,6 +80,10 @@
     background: #f8f9fa;
     border-radius: 8px;
     transition: all 0.3s ease;
+    padding: 8px 15px;
+    height: 56px;
+    display: flex;
+    align-items: center;
 }
 
 .masry-search__field:hover,
@@ -89,19 +93,34 @@
 }
 
 .masry-search__input-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
-    padding: 12px 15px;
-    cursor: pointer;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
 }
 
 .masry-search__icon {
     color: var(--primary-color);
-    font-size: 18px;
-    margin-right: 12px;
+    font-size: 16px;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.masry-search__input,
+.masry-search__input {
+    border: none;
+    background: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+}
+
 .masry-search__select {
     border: none;
     background: none;
@@ -118,23 +137,26 @@
 
 /* Enhanced Button Styles */
 .masry-search__button {
+    height: 56px;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 25px;
+    border-radius: 8px;
     background: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 0 30px;
     font-weight: 500;
-    letter-spacing: 0.3px;
+    font-size: 16px;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
     white-space: nowrap;
 }
 
 .masry-search__button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(228, 7, 78, 0.3);
+    box-shadow: 0 5px 15px rgba(228, 7, 78, 0.2);
 }
 
 /* Enhanced Dropdown Styles */
@@ -148,7 +170,7 @@
     border-radius: 15px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     margin-top: 5px;
-    backdrop-filter: blur(10px);
+   
     border: none;
     animation: dropdownFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: top center;
@@ -337,9 +359,8 @@
     }
 
     .masry-search__button {
+        height: 48px;
         width: 100%;
-        margin-top: 10px;
-        padding: 15px;
     }
 
     .masry-search__select {
@@ -416,11 +437,6 @@
 }
 
 /* Glass Morphism Effects */
-.masry-search__field,
-.masry-dropdown {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
 
 /* Loading States */
 .masry-search__field.loading {
@@ -1238,6 +1254,15 @@
     .masry-search {
         max-width: 1200px;
     }
+
+    .masry-search__button {
+        height: 64px;
+        font-size: 17px;
+    }
+
+    .masry-search__field {
+        height: 64px;
+    }
 }
 
 /* تحسينات للأجهزة اللوحية في الوضع الأفقي */
@@ -1259,5 +1284,95 @@
     bottom: -100px;
     width: 100%;
     z-index: 2;
+}
+
+/* تحسين مظهر البحث */
+.masry-search__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.masry-search__loader {
+    position: absolute;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.masry-select__dropdown {
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* تحسين تجربة المستخدم */
+.masry-search__input:focus + .masry-select__dropdown {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* تحسين أزرار البحث */
+.masry-search__location-detect {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    transition: all 0.3s ease;
+}
+
+.masry-search__location-detect:hover {
+    transform: scale(1.1);
+    color: var(--secondary-color);
+}
+
+/* تحسين حالة التحميل */
+.masry-search__button.loading {
+    position: relative;
+    color: transparent;
+}
+
+.masry-search__button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/* تحسين رسائل الخطأ */
+.masry-select__error {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    background: #ff4444;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 

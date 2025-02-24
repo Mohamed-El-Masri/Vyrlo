@@ -19,56 +19,219 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- main style -->
+    <!-- Custom CSS - Correct Order -->
     <link rel="stylesheet" href="../css/main/style.css">
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/main/header.css">
     <link rel="stylesheet" href="../css/main/footer.css">
     <link rel="stylesheet" href="../css/main/getStarted.css">
+    <link rel="stylesheet" href="../css/pages/addListing.css">
 
 </head>
 
 <body>
-    <header id="header">
+    <header id="header"></header>
+    <section id="getStarted"></section>
 
-    </header>
-    <section id="getStarted">
-
-
-    </section>
     <main>
+        <div class="masry-listing-form">
+            <!-- Progress Steps -->
+            <div class="masry-progress">
+                <ul class="masry-progress__steps">
+                    <li class="masry-progress__step active" data-step="1">
+                        <div class="masry-progress__step-icon">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="masry-progress__step-number">1</span>
+                        </div>
+                        <span class="masry-progress__step-title">Basic Information</span>
+                    </li>
+                    <li class="masry-progress__step" data-step="2">
+                        <div class="masry-progress__step-icon">
+                            <i class="fas fa-phone-alt"></i>
+                            <span class="masry-progress__step-number">2</span>
+                        </div>
+                        <span class="masry-progress__step-title">Contact Details</span>
+                    </li>
+                    <li class="masry-progress__step" data-step="3">
+                        <div class="masry-progress__step-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="masry-progress__step-number">3</span>
+                        </div>
+                        <span class="masry-progress__step-title">Location</span>
+                    </li>
+                    <li class="masry-progress__step" data-step="4">
+                        <div class="masry-progress__step-icon">
+                            <i class="fas fa-clock"></i>
+                            <span class="masry-progress__step-number">4</span>
+                        </div>
+                        <span class="masry-progress__step-title">Business Hours</span>
+                    </li>
+                    <li class="masry-progress__step" data-step="5">
+                        <div class="masry-progress__step-icon">
+                            <i class="fas fa-images"></i>
+                            <span class="masry-progress__step-number">5</span>
+                        </div>
+                        <span class="masry-progress__step-title">Media Upload</span>
+                    </li>
+                </ul>
+                <div class="masry-progress__bar">
+                    <div class="masry-progress__bar-fill" style="width: 0%"></div>
+                </div>
+            </div>
 
+            <!-- Form Content -->
+            <form id="listingForm">
+                <div class="form-steps-container">
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" id="basicInfo">
+                        <h3>Basic Information</h3>
+                        <div class="form-group">
+                            <label for="listingName">Business Name *</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="listingName" 
+                                   name="listingName" 
+                                   required
+                                   minlength="6" 
+                                   maxlength="20">
+                            <div class="invalid-feedback"></div>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="categoryInput">Category *</label>
+                            <div class="category-input-wrapper">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="categoryInput" 
+                                       placeholder="Search for a category..."
+                                       autocomplete="off"
+                                       required>
+                                <input type="hidden" id="categoryId" name="categoryId">
+                                <div class="category-suggestions" id="categorySuggestions"></div>
+                                <div class="invalid-feedback">Please select a valid category</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description *</label>
+                            <textarea class="form-control" 
+                                      id="description" 
+                                      name="description" 
+                                      rows="4" 
+                                      required
+                                      minlength="50" 
+                                      maxlength="1000"></textarea>
+                            <div class="char-counter">
+                                <span class="current">0</span>/<span class="maximum">1000</span>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Contact Details -->
+                    <div class="form-step" id="contactDetails">
+                        <h3>Contact Details</h3>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="invalid-feedback">Please enter a valid email address</div>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                            <div class="invalid-feedback">Please enter a valid phone number</div>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="website">Website (Optional)</label>
+                            <input type="url" class="form-control" id="website" name="website">
+                            <div class="invalid-feedback">Please enter a valid URL</div>
+                        </div>
+                    
+                        <div class="social-media-section">
+                            <h4>Social Media Links</h4>
+                            <div class="social-media-links">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fab fa-facebook"></i> Facebook
+                                    </label>
+                                    <input type="url" class="form-control" name="social_facebook">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fab fa-instagram"></i> Instagram
+                                    </label>
+                                    <input type="url" class="form-control" name="social_instagram">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </label>
+                                    <input type="url" class="form-control" name="social_twitter">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Location -->
+                    <div class="form-step" id="location">
+                        <!-- Location fields and map -->
+                    </div>
+
+                    <!-- Step 4: Business Hours -->
+                    <div class="form-step" id="businessHours">
+                        <!-- Business hours fields -->
+                    </div>
+
+                    <!-- Step 5: Media Upload -->
+                    <div class="form-step" id="media">
+                        <h3>Media Upload</h3>
+                        <div id="mediaUploadContainer"></div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="form-navigation">
+                    <button type="button" id="prevBtn" class="masry-btn masry-btn--prev">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <div class="step-indicator">
+                        Step <span id="currentStep">1</span> of 5
+                    </div>
+                    <button type="button" id="nextBtn" class="masry-btn masry-btn--next">
+                        Next
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="submitBtn" class="masry-btn masry-btn--submit" style="display: none;">
+                        <i class="fas fa-check"></i>
+                        Submit Listing
+                    </button>
+                </div>
+            </form>
+        </div>
     </main>
 
+    <footer id="footer"></footer>
 
-    <footer id="footer">
-
-    </footer>
-
-
-
-
-    <!-- scripts -->
-    <!-- JWT Decode -->
+    <!-- Scripts - Correct Order -->
+    <!-- Essential Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-    
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom Scripts - Correct Order -->
-    <script src="../js/main/authService.js"></script>
-    <script src="../js/main/auth.js"></script>
-    <script src="../js/main/component.js"></script>
-    
-    <!-- Additional Scripts -->
+
+    <!-- Core Services -->
     <script src="../js/main/getCategories.js"></script>
+    <script type="module" src="../js/services/authService.js"></script>
+    <script type="module" src="../js/main/component.js"></script>
+    <script type="module" src="../js/main/auth.js"></script>
+
+    <!-- Page Specific Scripts -->
+    <script type="module" src="../js/pages/addListing/services/ListingAPIService.js"></script>
+    <script type="module" src="../js/pages/addListing/FormValidator.js"></script>
+    <script type="module" src="../js/pages/addListing/ImageUploader.js"></script>
+    <script type="module" src="../js/pages/addListing/AddListingManager.js"></script>
 
 </body>
 

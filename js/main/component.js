@@ -15,14 +15,16 @@
  * @file /E:/PWD - 9Months/Intake45-9Months/ITI 9 Months Labs/00000- FreeLance/YellowBages/Masry/js/main/component.js
  */
 
+import { authService } from '../services/authService.js';
+import { initScrollToTop } from '../utilities/scroll.js';
 
 // #region Header
 // Injects the header content into the element with the ID 'header'.
 document.getElementById('header').innerHTML = `
 <nav id="guestNav" class="navbar navbar-expand-lg navbar-custom masry-main-nav">
     <div class="container masry-nav-container">
-        <!-- Logo -->
-        <a class="navbar-brand masry-brand" href="#">
+        <!-- Logo with updated href -->
+        <a class="navbar-brand masry-brand" href="../pages/home.html">
             <img src="../images/Logo.png" alt="logo" id="logo" class="masry-logo">
         </a>
 
@@ -39,11 +41,11 @@ document.getElementById('header').innerHTML = `
             <!-- Navigation Links -->
             <ul class="navbar-nav masry-nav-list">
                 <li class="nav-item masry-nav-item">
-                    <a class="nav-link masry-nav-link" href="../pages/home.html">Home</a>
+                    <a class="nav-link masry-nav-link" href="../pages/home.html" id="homeLink">Home</a>
                 </li>
                 <li class="nav-item dropdown masry-nav-item">
                     <a class="nav-link dropdown-toggle masry-dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                        aria-expanded="false" id="exploreLink">
                         Explore
                     </a>
                     <ul class="dropdown-menu masry-dropdown-menu">
@@ -69,7 +71,7 @@ document.getElementById('header').innerHTML = `
                     </ul>
                 </li>
                 <li class="nav-item masry-nav-item">
-                    <a class="nav-link masry-nav-link" aria-current="page" href="../pages/contact.html">Contact</a>
+                    <a class="nav-link masry-nav-link" aria-current="page" href="../pages/contact.html" id="contactLink">Contact</a>
                 </li>
             </ul>
 
@@ -115,9 +117,86 @@ document.getElementById('header').innerHTML = `
 </nav>
 `;
 
-// Remove all search related code
-document.addEventListener('DOMContentLoaded', function() {
-    // Remove existing dropdown variables and functions
+// تحديث حالة المصادقة في الهيدر
+const updateAuthUI = () => {
+    const { isAuthenticated, user } = authService.getAuthData();
+    
+    // Guest elements (Login & Add Business buttons)
+    document.querySelectorAll('.guest-only')
+        .forEach(el => el.classList.toggle('d-none', isAuthenticated));
+    
+    // Auth elements (Avatar & dropdown)
+    document.querySelectorAll('.auth-only')
+        .forEach(el => el.classList.toggle('d-none', !isAuthenticated));
+
+    if (isAuthenticated && user) {
+        // تحديث معلومات المستخدم
+        document.querySelectorAll('.masry-user-name')
+            .forEach(el => el.textContent = user.username);
+
+        document.querySelectorAll('.masry-user-image')
+            .forEach(el => {
+                el.src = user.profilePic?.[0] || '../images/user/user-1.png';
+                el.alt = user.username;
+            });
+
+        // تحديث قائمة روابط المستخدم
+        const businessLinkContainer = document.getElementById('businessLinkContainer');
+        if (businessLinkContainer) {
+            businessLinkContainer.innerHTML = `
+                <a class="dropdown-item masry-dropdown-item" href="../pages/newAddListing.html">
+                    <i class="fa-solid fa-plus"></i> Add Listing
+                </a>
+                ${user.numberOfProjects > 0 ? `
+                <a class="dropdown-item masry-dropdown-item" href="../pages/myListings.html">
+                    <i class="fa-solid fa-list"></i> My Listings
+                </a>` : ''}
+            `;
+        }
+
+        // إضافة معالج حدث تسجيل الخروج
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.removeEventListener('click', handleLogout); // إزالة المعالج القديم إن وجد
+            logoutBtn.addEventListener('click', handleLogout);
+        }
+    }
+};
+
+// دالة معالجة تسجيل الخروج
+const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+        await authService.logout();
+        location.reload(); // إعادة تحميل الصفحة بعد تسجيل الخروج
+    } catch (error) {
+        console.error('Logout failed:', error);
+    }
+};
+
+// Add event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize components
+    initScrollToTop();
+    updateAuthUI();
+    
+    // Add logout handler
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.removeEventListener('click', handleLogout); // Remove old handler if exists
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+});
+
+// Listen for auth state changes
+document.addEventListener('authStateChanged', updateAuthUI);
+
+// بعد إضافة محتوى Header مباشرة
+document.addEventListener('DOMContentLoaded', () => {
+    // Dispatch event after header content is loaded
+    const event = new CustomEvent('componentLoaded');
+    document.dispatchEvent(event);
+    console.log('Component: Header loaded, dispatched componentLoaded event');
 });
 
 //#endregion
@@ -130,7 +209,9 @@ document.getElementById('footer').innerHTML = `
     <footer class="masry-footer">
         <div class="masry-footer__container container">
             <div class="masry-footer__brand">
-                <img src="../images/logo.png" alt="Logo" class="masry-footer__logo">
+                <a href="../pages/home.html">
+                    <img src="../images/logo.png" alt="Logo" class="masry-footer__logo">
+                </a>
                 <p class="masry-footer__description">Your trusted directory for local businesses and services. Find, connect, and grow with our community.</p>
                 <ul class="masry-footer__social">
                     <li><a href="#" class="masry-footer__social-link"><i class="fa-brands fa-facebook-f"></i></a></li>
@@ -173,12 +254,17 @@ document.getElementById('footer').innerHTML = `
             </div>
         </div>
         <div class="masry-footer__scroll-top">
-            <a href="#main" class="masry-footer__scroll-link"><i class="fa-solid fa-arrow-up"></i></a> 
+            <a href="#" class="masry-footer__scroll-link">
+                <i class="fa-solid fa-arrow-up"></i>
+            </a> 
         </div>
         <hr class="masry-footer__divider">
         <p class="masry-footer__copyright">© 2024 VYRLO - Designed By <a href="#" class="masry-footer__credit">ByteCamp</a> - All Rights Reserved</p>
     </footer>
 `;
+
+// Initialize scroll-to-top functionality after footer is rendered
+initScrollToTop();
 //#endregion
 
 
@@ -405,3 +491,59 @@ document.getElementById('getStarted').innerHTML = `
 `;
 
 //#endregion
+
+// إضافة دالة لتحديد الصفحة النشطة
+function setActiveLink() {
+    // الحصول على اسم الصفحة الحالية من URL
+    const currentPage = window.location.pathname.split('/').pop();
+    
+    // إزالة الكلاس النشط من جميع الروابط
+    document.querySelectorAll('.masry-nav-link').forEach(link => {
+        link.classList.remove('masry-header-active');
+    });
+
+    // إضافة الكلاس للرابط النشط
+    switch(currentPage) {
+        case 'home.html':
+            document.getElementById('homeLink')?.classList.add('masry-header-active');
+            break;
+        case 'contact.html':
+            document.getElementById('contactLink')?.classList.add('masry-header-active');
+            break;
+        // يمكن إضافة المزيد من الحالات هنا
+    }
+
+    // التعامل مع Explore إذا كنا في صفحة allListings.html
+    if (currentPage === 'allListings.html') {
+        document.getElementById('exploreLink')?.classList.add('masry-header-active');
+    }
+}
+
+// إضافة معالج DOMContentLoaded لتنفيذ الدالة
+document.addEventListener('DOMContentLoaded', () => {
+    setActiveLink();
+    // ...existing DOMContentLoaded handlers...
+});
+
+// export class Component {
+//     // ...existing code...
+
+//     initializeLogoutHandler() {
+//         console.log('Component: Initializing logout handler');
+//         const logoutBtn = document.getElementById('logoutBtn');
+//         if (logoutBtn) {
+//             // إزالة معالجات الأحداث القديمة لتجنب التكرار
+//             logoutBtn.replaceWith(logoutBtn.cloneNode(true));
+//             const newLogoutBtn = document.getElementById('logoutBtn');
+            
+//             newLogoutBtn.addEventListener('click', async (e) => {
+//                 e.preventDefault();
+//                 console.log('Component: Logout button clicked');
+//                 // ترك معالجة الحدث لـ AuthUI
+//                 return;
+//             });
+//         }
+//     }
+
+//     // ...existing code...
+// }

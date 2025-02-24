@@ -1,0 +1,678 @@
+/* Enhanced Input Validation Styles */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border: 2px solid #e1e1e1;
+    border-radius: 12px;
+    padding: 12px 15px 12px 45px; /* Space for icon */
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+/* Form Focus States */
+.form-control:focus {
+    border-color: #e4074e;
+    box-shadow: 0 0 0 0.25rem rgba(228, 7, 78, 0.1);
+}
+
+.form-control:focus ~ .input-icon {
+    color: #e4074e;
+}
+
+/* Success State */
+.form-control.is-valid {
+    border-color: #28a745;
+    background: none;
+    padding-right: 40px;
+    animation: validPop 0.3s ease;
+}
+
+.form-control.is-valid:focus {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.1);
+}
+
+.form-control.is-valid ~ .input-icon {
+    color: #28a745 !important;
+    animation: iconPop 0.3s ease;
+}
+
+/* Error State */
+.form-control.is-invalid {
+    border-color: #e4074e;
+    background: none;
+    padding-right: 40px;
+    animation: invalidPop 0.3s ease;
+}
+
+.form-control.is-invalid:focus {
+    box-shadow: 0 0 0 0.25rem rgba(228, 7, 78, 0.1);
+}
+
+.form-control.is-invalid ~ .input-icon {
+    color: #e4074e !important;
+    animation: iconPop 0.3s ease;
+}
+
+/* Validation Messages */
+.invalid-feedback,
+.valid-feedback {
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.invalid-feedback {
+    color: #e4074e;
+}
+
+.valid-feedback {
+    color: #28a745;
+}
+
+.form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-valid ~ .valid-feedback {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Input Icons */
+.input-icon {
+    position: absolute;
+    left: 15px; /* Move icons to left */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus + .input-icon {
+    color: var(--primary-color);
+}
+
+.form-control.is-valid + .input-icon {
+    color: #28a745;
+}
+
+.form-control.is-invalid + .input-icon {
+    color: var(--primary-color);
+}
+
+/* Animation for validation state changes */
+@keyframes validationPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes validPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes invalidPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes iconPop {
+    0% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.2); }
+    100% { transform: translateY(-50%) scale(1); }
+}
+
+.form-control.is-invalid,
+.form-control.is-valid {
+    animation: validationPop 0.3s ease;
+}
+
+/* Enhanced Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast {
+    min-width: 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    opacity: 1;
+    border: none;
+}
+
+.toast.toast-error {
+    border-left: 4px solid #e4074e;
+}
+
+.toast.toast-success {
+    border-left: 4px solid #28a745;
+}
+
+.toast .toast-header {
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 12px 15px;
+}
+
+.toast .toast-body {
+    padding: 12px 15px;
+    color: #666;
+}
+
+/* تحسين أنيميشن الإشعار */
+.toast.logout-toast {
+    opacity: 0;
+    transform: translateX(100%);
+    animation: toastIn 0.3s ease forwards;
+}
+
+.toast.logout-toast.hiding {
+    animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toastOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* تحسين مظهر الإشعار */
+.toast.logout-toast {
+    background: white;
+    border-left: 4px solid #28a745;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 300px;
+}
+
+.toast.logout-toast .toast-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 12px 15px;
+}
+
+.toast.logout-toast .toast-body {
+    padding: 12px 15px;
+    color: #666;
+}
+
+/* Logout Toast Specific Styles */
+.toast.logout-toast {
+    border: none;
+    border-left: 4px solid #28a745;
+    animation: slideIn 0.3s ease-out;
+}
+
+.toast.logout-toast.hiding {
+    animation: slideOut 0.3s ease-in;
+}
+
+.toast.logout-toast .toast-header {
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 12px 15px;
+    position: relative;
+}
+
+.toast.logout-toast .toast-header strong {
+    color: #28a745;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toast.logout-toast .toast-header strong i {
+    font-size: 1.2rem;
+}
+
+.toast.logout-toast .toast-body {
+    padding: 12px 15px;
+    color: #666;
+}
+
+/* Toast Animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.toast.show {
+    animation: slideIn 0.3s ease forwards;
+}
+
+.toast.hiding {
+    animation: slideOut 0.3s ease forwards;
+}
+
+/* Enhanced Toast Styles */
+.toast-container {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+}
+
+.toast {
+    min-width: 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    display: block;
+    opacity: 1;
+    animation: slideIn 0.3s ease forwards;
+}
+
+.toast.hiding {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Ensure toasts are always visible */
+.toast-container {
+    display: block !important;
+    visibility: visible !important;
+}
+
+.toast {
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* Modal Input Groups Enhancement */
+.modal .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.modal .password-input-group {
+    position: relative;
+}
+
+.modal .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease;
+}
+
+.modal .toggle-password:hover {
+    color: var(--primary-color);
+}
+
+/* Invalid Feedback Enhancement */
+.invalid-feedback {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.form-control.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+/* Password Requirements Enhancement */
+.password-requirements {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.requirement {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.requirement i {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+.requirement.valid {
+    color: #28a745;
+}
+
+.requirement.valid i {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .toast-container {
+        right: 10px;
+        left: 10px;
+    }
+    
+    .toast {
+        min-width: auto;
+    }
+    
+    .modal .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Auth Modals Styling */
+.auth-form .form-group {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+/* Input Fields */
+.auth-form .form-control {
+    height: 48px;
+    padding: 10px 15px 10px 45px;
+    border: 2px solid #e1e1e1;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+/* Input Icons */
+.auth-form .input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    transition: all 0.3s ease;
+}
+
+/* Validation States */
+.auth-form .form-control.is-valid {
+    border-color: #28a745;
+    padding-right: 45px;
+    background-image: none;
+}
+
+.auth-form .form-control.is-invalid {
+    border-color: var(--primary-color);
+    padding-right: 45px;
+    background-image: none;
+}
+
+/* Validation Feedback */
+.auth-form .invalid-feedback,
+.auth-form .valid-feedback {
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.auth-form .invalid-feedback {
+    color: var(--primary-color);
+}
+
+.auth-form .valid-feedback {
+    color: #28a745;
+}
+
+/* Focus States */
+.auth-form .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(228, 7, 78, 0.1);
+}
+
+.auth-form .form-control:focus ~ .input-icon {
+    color: var(--primary-color);
+}
+
+.auth-form .form-control.is-valid:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.auth-form .form-control.is-valid ~ .input-icon {
+    color: #28a745;
+}
+
+.auth-form .form-control.is-invalid:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(228, 7, 78, 0.1);
+}
+
+.auth-form .form-control.is-invalid ~ .input-icon {
+    color: var(--primary-color);
+}
+
+/* Password Toggle Button */
+.auth-form .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.auth-form .toggle-password:hover {
+    color: var(--primary-color);
+}
+
+/* Password Requirements */
+.auth-form .password-requirements {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.auth-form .requirement {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.auth-form .requirement i {
+    font-size: 12px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+.auth-form .requirement.valid {
+    color: #28a745;
+}
+
+.auth-form .requirement.valid i {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+/* Animation for validation states */
+.auth-form .form-control.is-valid,
+.auth-form .form-control.is-invalid {
+    animation: validationPop 0.3s ease;
+}
+
+@keyframes validationPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .auth-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .auth-form .form-control {
+        height: 44px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Toast Enhancement */
+.toast-container {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+    min-width: 300px !important;
+}
+
+.toast.logout-toast {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    display: block !important;
+    margin-bottom: 1rem !important;
+}
+
+.toast.logout-toast.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    animation: slideIn 0.5s ease forwards !important;
+}
+
+.toast.logout-toast.hiding {
+    animation: slideOut 0.5s ease forwards !important;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
