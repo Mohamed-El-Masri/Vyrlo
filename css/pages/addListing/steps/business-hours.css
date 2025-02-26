@@ -1,0 +1,9 @@
+/* Business Hours Step Styles */
+.form-step[id="businessHours"] {
+    /* Business hours step specific styles */
+}
+
+.business-hours-container {
+    display: grid;
+    gap: 1rem;
+}

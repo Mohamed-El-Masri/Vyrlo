@@ -1,0 +1,276 @@
+/* Contact Details Step */
+.form-step[id="contactDetails"] {
+    /* Contact Details Step */
+}
+
+.contact-details-wrapper {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Phone Input Styling */
+.phone-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: start;
+}
+
+.country-select {
+    min-width: 100px;
+    position: relative;
+}
+
+.country-select .selected-flag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.country-select .selected-flag:hover {
+    border-color: var(--primary-color);
+}
+
+.country-select .flag-icon {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.country-select .dial-code {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Country List Dropdown */
+.country-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.country-list.show {
+    display: block;
+}
+
+.country-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.country-item:hover {
+    background-color: #f8f9fa;
+}
+
+.country-item.selected {
+    background-color: rgba(228, 7, 78, 0.05);
+}
+
+/* Social Media Section */
+.social-media-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.social-media-section h4 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.social-media-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Social Input Wrapper - Updated */
+.social-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: stretch; /* تغيير من center إلى stretch */
+    margin-bottom: 1rem;
+}
+
+/* Enhanced Social Icons with Background */
+.social-input-wrapper i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 46px; /* زيادة العرض قليلاً */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #e9ecef;
+    border-right: none;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+/* Input field refinements */
+.social-input-wrapper input {
+    padding-left: 54px !important; /* زيادة المسافة للأيقونة */
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+/* Platform-specific styling - Updated */
+.social-input-wrapper.facebook i {
+    background: linear-gradient(45deg, rgba(24, 119, 242, 0.1), rgba(24, 119, 242, 0.05));
+    color: #1877f2;
+    border-color: rgba(24, 119, 242, 0.2);
+}
+
+.social-input-wrapper.instagram i {
+    background: linear-gradient(45deg, rgba(228, 64, 95, 0.1), rgba(228, 64, 95, 0.05));
+    color: #e4405f;
+    border-color: rgba(228, 64, 95, 0.2);
+}
+
+.social-input-wrapper.twitter i {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+    color: #000;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Hover States */
+.social-input-wrapper:hover input {
+    border-color: #e9ecef;
+    box-shadow: 0 0 0 4px rgba(233, 236, 239, 0.2);
+}
+
+.social-input-wrapper.facebook:hover i {
+    background: linear-gradient(45deg, rgba(24, 119, 242, 0.15), rgba(24, 119, 242, 0.1));
+    color: #1877f2;
+}
+
+.social-input-wrapper.instagram:hover i {
+    background: linear-gradient(45deg, rgba(228, 64, 95, 0.15), rgba(228, 64, 95, 0.1));
+    color: #e4405f;
+}
+
+.social-input-wrapper.twitter:hover i {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.1));
+    color: #000;
+}
+
+/* Focus States - Enhanced */
+.social-input-wrapper input:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(228, 7, 78, 0.1);
+}
+
+.social-input-wrapper.facebook input:focus {
+    border-color: #1877f2;
+}
+
+.social-input-wrapper.facebook input:focus + i {
+    background: linear-gradient(45deg, rgba(24, 119, 242, 0.2), rgba(24, 119, 242, 0.15));
+    border-color: #1877f2;
+    color: #1877f2;
+}
+
+.social-input-wrapper.instagram input:focus {
+    border-color: #e4405f;
+}
+
+.social-input-wrapper.instagram input:focus + i {
+    background: linear-gradient(45deg, rgba(228, 64, 95, 0.2), rgba(228, 64, 95, 0.15));
+    border-color: #e4405f;
+    color: #e4405f;
+}
+
+.social-input-wrapper.twitter input:focus {
+    border-color: #000;
+}
+
+.social-input-wrapper.twitter input:focus + i {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.15));
+    border-color: #000;
+    color: #000;
+}
+
+/* Validation States - Enhanced */
+.social-input-wrapper input.is-valid {
+    border-color: #28a745;
+    padding-right: 40px;
+}
+
+.social-input-wrapper input.is-valid + i {
+    border-color: #28a745;
+    background: linear-gradient(45deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.1));
+    color: #28a745;
+}
+
+.social-input-wrapper input.is-invalid {
+    border-color: #dc3545;
+    padding-right: 40px;
+}
+
+.social-input-wrapper input.is-invalid + i {
+    border-color: #dc3545;
+    background: linear-gradient(45deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.1));
+    color: #dc3545;
+}
+
+/* Validation States with Icons */
+.social-input-wrapper input.is-valid {
+    border-color: #28a745;
+    padding-right: 40px !important;
+}
+
+.social-input-wrapper input.is-invalid {
+    border-color: #dc3545;
+    padding-right: 40px !important;
+}
+
+/* Validation States */
+.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .phone-input-wrapper {
+        flex-direction: column;
+    }
+
+    .country-select {
+        width: 100%;
+    }
+
+    .social-media-links {
+        grid-template-columns: 1fr;
+    }
+    
+    .social-input-wrapper input {
+        font-size: 0.9rem;
+    }
+}

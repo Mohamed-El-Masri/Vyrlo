@@ -218,3 +218,18 @@ document.addEventListener('componentLoaded', () => {
 window.CategoryManager = CategoryManager;
 
 console.log(CategoryManager.getInstance());
+
+// Update the export to be named
+export async function getCategories() {
+    const url = 'https://virlo.vercel.app/categories';
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch categories');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
+}

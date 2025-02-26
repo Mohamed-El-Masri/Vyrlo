@@ -62,7 +62,10 @@
 .form-navigation {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(228, 7, 78, 0.1); /* تغيير لون الحدود ليتناسق مع الألوان */
 }
 
 /* ... more styles needed ... */
@@ -234,6 +237,8 @@
 .form-steps-container {
     min-height: 400px;
     position: relative;
+    padding: 2rem 0;
+    margin-bottom: 0; /* تغيير من 2rem إلى 0 */
 }
 
 /* Individual Form Step */
@@ -253,48 +258,196 @@
     position: relative;
 }
 
-/* Form Navigation Buttons */
+/* Step Headings */
+.form-step h3 {
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Form Groups */
+.form-group {
+    position: relative;
+    margin-bottom: 1.8rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Form Navigation */
 .form-navigation {
+    position: relative; /* تغيير من sticky/fixed إلى relative */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 3rem;
-    padding: 1rem 0;
-    border-top: 1px solid #eee;
-    position: sticky;
-    bottom: 0;
-    background: white;
-    z-index: 10;
-    box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(228, 7, 78, 0.1);
+    background: transparent;
+    width: 100%;
+    z-index: 1;
 }
 
 .masry-btn {
-    padding: 12px 25px;
+    padding: 10px 24px;
     border-radius: 30px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Previous Button */
+.masry-btn--prev {
+    background-color: #f8f9fa;
+    color: #666;
+    border: 2px solid #e9ecef;
+}
+
+.masry-btn--prev:hover {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateX(-3px);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateX(-3px);
+}
+
+/* Next Button */
+.masry-btn--next {
+    background-color: var(--primary-color);
+    color: white;
     position: relative;
     overflow: hidden;
 }
 
-.masry-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
+.masry-btn--next:hover {
+    background-color: #d1063f; /* لون أغمق قليلاً */
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(228, 7, 78, 0.2);
+    background-color: #d1063f;
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(228, 7, 78, 0.2);
 }
 
-.masry-btn:hover::before {
-    transform: translateX(100%);
+/* Submit Button */
+.masry-btn--submit {
+    background-color: #28a745;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.masry-btn--submit:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+    background-color: #d1063f;
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(228, 7, 78, 0.2);
+}
+
+/* Step Indicator */
+.step-indicator {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+/* Remove old button animations */
+.masry-btn::before {
+    display: none;
+}
+
+/* Add new smooth transition for buttons */
+.masry-btn i {
+    transition: transform 0.3s ease;
+}
+
+.masry-btn--prev:hover i {
+    transform: translateX(-4px);
+}
+
+.masry-btn--next:hover i {
+    transform: translateX(4px);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .form-navigation {
+        position: relative; /* تغيير من fixed إلى relative */
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin: 1rem 0;
+        padding: 1rem 0;
+        background: transparent;
+        border-top: 1px solid rgba(228, 7, 78, 0.1);
+        box-shadow: none;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 1rem 0 0;
+        padding: 1rem 0;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .masry-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .masry-progress__steps {
+        overflow-x: auto;
+        padding-bottom: 20px;
+    }
+
+    .step-indicator {
+        order: -1;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
 }
 
 .masry-btn--prev {
@@ -333,11 +486,70 @@
     content: "\f104";
     margin-right: 8px;
 }
-
+/* 
 .masry-btn--next::after {
     font-family: "Font Awesome 5 Free";
     content: "\f105";
     margin-left: 8px;
+} */
+
+/* Responsive Design Improvements */
+@media (max-width: 768px) {
+    .masry-listing-form {
+        margin: 80px 15px 2rem;
+        padding: 1.5rem;
+    }
+
+    .form-navigation {
+        position: relative; /* تأكيد على relative */
+        margin: 1rem 0 0;
+        padding: 1rem 0;
+        background: transparent;
+        width: 100%;
+    }
+
+    .masry-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        flex: 1;
+        min-width: 90px;
+    }
+
+    /* إزالة الظل والخلفية في الموبايل */
+    .form-navigation {
+        box-shadow: none;
+        background: transparent;
+    }
+}
+
+.masry-btn--prev {
+    background-color: #f8f9fa;
+    color: #666;
+}
+
+.masry-btn--prev:hover {
+    background-color: #e9ecef;
+    transform: translateX(-3px);
+}
+
+.masry-btn--next {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.masry-btn--next:hover {
+    background-color: #c8063f;
+    transform: translateX(3px);
+}
+
+.masry-btn--submit {
+    background-color: #28a745;
+    color: white;
+}
+
+.masry-btn--submit:hover {
+    background-color: #218838;
+    transform: scale(1.05);
 }
 
 /* Responsive Design Improvements */
@@ -382,15 +594,20 @@
     }
 
     .form-navigation {
+        margin: 1rem -1rem -1rem;
         padding: 1rem;
-        flex-wrap: wrap;
-        gap: 10px;
+        background: white;
+        border-top: 1px solid #eee;
     }
 
     .masry-btn {
-        flex: 1;
-        min-width: 120px;
-        justify-content: center;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        min-width: 80px;
+    }
+
+    .step-indicator {
+        font-size: 0.85rem;
     }
 }
 
@@ -725,6 +942,10 @@
     justify-content: flex-end;
     font-size: 0.875rem;
     color: #6c757d;
+    margin-top: 0.25rem;
+    text-align: right;
+    color: #666;
+    font-size: 0.85rem;
     margin-top: 0.25rem;
 }
 

@@ -1,0 +1,184 @@
+/* Progress Steps Container */
+.masry-progress {
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.masry-progress__steps {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+/* Progress Line */
+.masry-progress__bar {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #e9ecef;
+    z-index: 1;
+}
+
+.masry-progress__bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.5s ease;
+}
+
+/* Step Item */
+.masry-progress__step {
+    text-align: center;
+    width: 70px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.masry-progress__step:not(.active):hover {
+    transform: translateY(-3px);
+}
+
+.masry-progress__step:not(.active):hover .masry-progress__step-icon {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(228, 7, 78, 0.15);
+}
+
+.masry-progress__step.completed {
+    cursor: pointer;
+}
+
+.masry-progress__step:not(.completed):not(.active) {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.masry-progress__step-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.masry-progress__step.active .masry-progress__step-icon {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(228, 7, 78, 0.2);
+}
+
+.masry-progress__step.completed .masry-progress__step-icon {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Step Icons */
+.masry-progress__step i {
+    font-size: 24px;
+    color: #ccc;
+    transition: all 0.3s ease;
+}
+
+.masry-progress__step.active i {
+    color: var(--primary-color);
+}
+
+.masry-progress__step.completed i {
+    color: white;
+}
+
+/* Step Number */
+.masry-progress__step-number {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.masry-progress__step.active .masry-progress__step-number {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Step Title */
+.masry-progress__step-title {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    position: absolute;
+    width: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.masry-progress__step.active .masry-progress__step-title {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Hover Effects */
+.masry-progress__step:hover .masry-progress__step-icon {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .masry-progress__steps {
+        overflow-x: auto;
+        padding-block: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .masry-progress__step {
+        min-width: 60px;
+        margin-right: 20px;
+    }
+
+    .masry-progress__step:last-child {
+        margin-right: 0;
+    }
+
+    .masry-progress__step-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .masry-progress__step i {
+        font-size: 20px;
+    }
+
+    .masry-progress__step-title {
+        display: none;
+    }
+
+    .masry-progress__bar {
+        top: 45px;
+    }
+}
