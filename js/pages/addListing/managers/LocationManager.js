@@ -4,8 +4,8 @@ export class LocationManager {
         this.marker = null;
         this.geocoder = new google.maps.Geocoder();
         this.searchBox = null;
-        this.defaultLocation = { lat: 30.0444, lng: 31.2357 }; // Cairo coordinates
-        
+        this.defaultLocation = { lat: 43.65107, lng: -79.347015 }; // Toronto coordinates
+
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.initialize());
@@ -15,10 +15,10 @@ export class LocationManager {
     }
 
     initialize() {
-        // Remove initializeValidation call since we're not using it separately
         this.initializeMap();
         this.initializeSearchBox();
         this.initializeCurrentLocation();
+        this.loadSavedLocation();
     }
 
     initializeMap() {
@@ -154,6 +154,9 @@ export class LocationManager {
             return;
         }
 
+        // Save location to localStorage
+        localStorage.setItem('savedLocation', JSON.stringify({ lat, lng }));
+
         // Update hidden inputs
         const latitudeInput = document.getElementById('latitude');
         const longitudeInput = document.getElementById('longitude');
@@ -179,6 +182,17 @@ export class LocationManager {
                     }
                 }
             });
+        }
+    }
+
+    loadSavedLocation() {
+        const savedLocation = localStorage.getItem('savedLocation');
+        if (savedLocation) {
+            const { lat, lng } = JSON.parse(savedLocation);
+            const position = new google.maps.LatLng(lat, lng);
+            this.map.setCenter(position);
+            this.marker.setPosition(position);
+            this.updateLocationDetails(position);
         }
     }
 
@@ -247,10 +261,10 @@ export class LocationManager {
     }
 
     validateAddress(address) {
-        if (!address || address.trim().length < 10) {
+        if (!address || address.trim().length < 4) {
             return {
                 isValid: false,
-                message: 'Please enter a complete address (minimum 10 characters)',
+                message: 'Please enter a complete address (minimum 4 characters)',
                 type: 'error'
             };
         }

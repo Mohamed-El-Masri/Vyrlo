@@ -10,27 +10,53 @@ export class ContactDetailsManager {
         const websiteInput = document.getElementById('website');
         const socialInputs = document.querySelectorAll('[data-social]');
 
+        // Load saved values from localStorage
+        this.loadSavedValues(emailInput, 'email');
+        this.loadSavedValues(phoneInput, 'phone');
+        this.loadSavedValues(websiteInput, 'website');
+        socialInputs.forEach(input => this.loadSavedValues(input, input.dataset.social));
+
         // Add real-time validation for required fields
         if (emailInput) {
-            emailInput.addEventListener('input', () => this.validateField(emailInput, 'email'));
+            emailInput.addEventListener('input', () => this.handleInputChange(emailInput, 'email'));
             emailInput.addEventListener('blur', () => this.validateField(emailInput, 'email', true));
         }
 
         if (phoneInput) {
-            phoneInput.addEventListener('input', () => this.validateField(phoneInput, 'phone'));
+            phoneInput.addEventListener('input', () => this.handleInputChange(phoneInput, 'phone'));
             phoneInput.addEventListener('blur', () => this.validateField(phoneInput, 'phone', true));
         }
 
         // Optional fields validation
         if (websiteInput) {
-            websiteInput.addEventListener('input', () => this.validateField(websiteInput, 'website'));
+            websiteInput.addEventListener('input', () => this.handleInputChange(websiteInput, 'website'));
             websiteInput.addEventListener('blur', () => this.validateField(websiteInput, 'website', true));
         }
 
         socialInputs.forEach(input => {
-            input.addEventListener('input', () => this.validateField(input, 'social'));
+            input.addEventListener('input', () => this.handleInputChange(input, input.dataset.social));
             input.addEventListener('blur', () => this.validateField(input, 'social', true));
         });
+    }
+
+    handleInputChange(input, key) {
+        this.saveValue(input, key);
+        this.validateField(input, key);
+    }
+
+    saveValue(input, key) {
+        if (input) {
+            localStorage.setItem(key, input.value);
+        }
+    }
+
+    loadSavedValues(input, key) {
+        if (input) {
+            const savedValue = localStorage.getItem(key);
+            if (savedValue) {
+                input.value = savedValue;
+            }
+        }
     }
 
     validateField(input, type, isBlur = false) {
